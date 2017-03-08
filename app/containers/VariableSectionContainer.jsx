@@ -4,8 +4,6 @@ import VariableSection from '../components/VariableSection';
 
 class VariableSectionContainer extends Component {
   render() {
-    console.log('*****************')
-    console.log('*****************')
     return (
       <VariableSection {...this.props} />
     );

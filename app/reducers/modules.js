@@ -22,7 +22,23 @@ const modules = (state = {}, action) => {
         },
       };
     case 'DELETE_MODULE':
-      return _.omit(state, action.module.id);
+      {
+        const shallowState = Object.assign({}, state);
+        const m = state[action.module.id];
+        if (m) {
+          if (m.condition) {
+            m.condition.map((id) => {
+              delete shallowState[id];
+            });
+          }
+          if (m.procedure) {
+            m.procedure.map((id) => {
+              delete shallowState[id];
+            });
+          }
+        }
+        return _.omit(shallowState, action.module.id);
+      }
     default:
       return state;
   }

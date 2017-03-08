@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
 import App from './containers/App';
+import routes from './routes';
 import configureStore from './store/configureStore';
 import '../styles/base.scss';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
@@ -13,7 +14,7 @@ document.body.appendChild(app);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    {routes}
   </Provider>,
   app
 );

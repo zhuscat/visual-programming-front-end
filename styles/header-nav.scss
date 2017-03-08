@@ -1,0 +1,15 @@
+.vp-header-brand {
+  height: 58px;
+  line-height: 58px;
+  float: left;
+}
+
+.vp-header-nav {
+  float: left;
+
+  &__item {
+    height: 58px;
+    line-height: 58px;
+    float: left;
+  }
+}
