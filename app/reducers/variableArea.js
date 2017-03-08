@@ -6,8 +6,16 @@ const variableArea = (state = [], action) => {
       }
       return state;
     case 'DELETE_MODULE':
-      // TODO: 这里要去删除数组中的元素
-      return state;
+      {
+        const idx = state.indexOf(action.module.id);
+        if (idx !== -1) {
+          return [
+            ...state.slice(0, idx),
+            ...state.slice(idx + 1),
+          ];
+        }
+        return state;
+      }
     default:
       return state;
   }
