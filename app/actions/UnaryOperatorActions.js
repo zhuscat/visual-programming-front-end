@@ -12,14 +12,14 @@ export const addUnaryOperator = ({ parentId, playload, area }) => ({
   },
 });
 
-export const changeUnaryOperator = ({ id, val, valType, op, assign }) => ({
+export const changeUnaryOperator = ({ id, val, valType, op, assignValue }) => ({
   type: 'UPDATE_MODULE',
   module: {
     id,
     val,
     valType,
     op,
-    assign,
+    assignValue,
   },
 });
 

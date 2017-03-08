@@ -11,7 +11,7 @@ const propTypes = {
   val: PropTypes.string,
   valType: PropTypes.string,
   op: PropTypes.string,
-  assign: PropTypes.string,
+  assignValue: PropTypes.string,
   entities: PropTypes.object,
   parentId: PropTypes.string,
   dispatch: PropTypes.func,
@@ -84,7 +84,7 @@ export default class UnaryOperatorModule extends Component {
       val: value,
       valType: 'VAR',
       op: this.props.op,
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -95,7 +95,7 @@ export default class UnaryOperatorModule extends Component {
       val: this.props.val,
       valType: this.props.valType,
       op: this.props.op,
-      assign: value,
+      assignValue: value,
     }));
   }
 
@@ -106,7 +106,7 @@ export default class UnaryOperatorModule extends Component {
       val: value,
       valType: 'immediate',
       op: this.props.op,
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -117,7 +117,7 @@ export default class UnaryOperatorModule extends Component {
       val: this.props.val,
       valType: this.props.valType,
       op: this.getNextOpratorValue(),
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -155,7 +155,7 @@ export default class UnaryOperatorModule extends Component {
             一元操作
           </span>
           <ChooseInput
-            value={this.props.assign}
+            value={this.props.assignValue}
             onOptionSelect={this.handleAssignInputClick}
             options={this.getAssignOptions()}
           />

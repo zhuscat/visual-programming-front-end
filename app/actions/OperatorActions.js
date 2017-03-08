@@ -12,7 +12,7 @@ export const addOperator = ({ parentId, playload, area }) => ({
   },
 });
 
-export const changeOperator = ({ id, first, firstType, second, secondType, op, assign }) => ({
+export const changeOperator = ({ id, first, firstType, second, secondType, op, assignValue }) => ({
   type: 'UPDATE_MODULE',
   module: {
     id,
@@ -21,7 +21,7 @@ export const changeOperator = ({ id, first, firstType, second, secondType, op, a
     second,
     secondType,
     op,
-    assign,
+    assignValue,
   },
 });
 

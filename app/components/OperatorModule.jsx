@@ -13,7 +13,7 @@ const propTypes = {
   second: PropTypes.string,
   secondType: PropTypes.string,
   op: PropTypes.string,
-  assign: PropTypes.string,
+  assignValue: PropTypes.string,
   entities: PropTypes.object,
   parentId: PropTypes.string,
   dispatch: PropTypes.func,
@@ -123,7 +123,7 @@ export default class OperatorModule extends Component {
       second: this.props.second,
       secondType: this.props.secondType,
       op: this.props.op,
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -136,7 +136,7 @@ export default class OperatorModule extends Component {
       second: value,
       secondType: 'VAR',
       op: this.props.op,
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -149,7 +149,7 @@ export default class OperatorModule extends Component {
       second: this.props.second,
       secondType: this.props.secondType,
       op: this.props.op,
-      assign: value,
+      assignValue: value,
     }));
   }
 
@@ -162,7 +162,7 @@ export default class OperatorModule extends Component {
       second: this.props.second,
       secondType: this.props.secondType,
       op: this.props.op,
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -175,7 +175,7 @@ export default class OperatorModule extends Component {
       second: value,
       secondType: 'immediate',
       op: this.props.op,
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -188,7 +188,7 @@ export default class OperatorModule extends Component {
       second: this.props.second,
       secondType: this.props.secondType,
       op: this.getNextOpratorValue(),
-      assign: this.props.assign,
+      assignValue: this.props.assignValue,
     }));
   }
 
@@ -227,7 +227,7 @@ export default class OperatorModule extends Component {
             操作
           </span>
           <ChooseInput
-            value={this.props.assign}
+            value={this.props.assignValue}
             onOptionSelect={this.handleAssignInputClick}
             options={this.getAssignOptions()}
           />
