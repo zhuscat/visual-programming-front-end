@@ -5,6 +5,7 @@ var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 module.exports = {
+    devtool: 'eval-source-map',
     // 默认寻找文件夹下面的index.js文件
     entry: {
         app: path.resolve(APP_PATH, 'index.jsx'),
@@ -51,6 +52,5 @@ module.exports = {
                 loader: 'url-loader?limit=50000&name=[path][name].[ext]'
             },
         ]
-    },
-    devtool: 'eval-source-map'
+    }
 };

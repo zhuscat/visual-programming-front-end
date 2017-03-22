@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import '../../styles/login.scss';
 import '../../styles/link.scss';
 
-export default class Login extends Component {
+export default class SignUp extends Component {
   render() {
     return (
       <div className="vp-login">
@@ -20,7 +20,7 @@ export default class Login extends Component {
             margin: '16px 0',
           }}
         >
-        登录
+        注册
         </Button>
         <Link className="vp-link" to="/signup">注册</Link>
       </div>

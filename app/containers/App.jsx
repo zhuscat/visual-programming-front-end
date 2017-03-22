@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import SidebarContainer from './SidebarContainer';
 import VariableSectionContainer from './VariableSectionContainer';
 import ProcedureSectionContainer from './ProcedureSectionContainer';
+import { Link } from 'react-router';
+import NavItem from '../components/NavItem';
+import '../font/iconfont.css';
 import '../../styles/header-nav.scss';
 import '../../styles/header.scss';
 import '../../styles/utils.scss';
@@ -21,9 +24,21 @@ export default class App extends Component {
         <header className="vp-header clearfix">
           <h1 className="vp-header-brand">暂时</h1>
           <nav className="vp-header-nav">
-            <div className="vp-header-nav__item">编程</div>
-            <div className="vp-header-nav__item">登录</div>
-            <div className="vp-header-nav__item">注册</div>
+            <NavItem
+              link="/"
+              iconName="dianping"
+              title="编程"
+            />
+            <NavItem
+              link="/login"
+              iconName="denglu"
+              title="登录"
+            />
+            <NavItem
+              link="/signup"
+              iconName="geren"
+              title="注册"
+            />
           </nav>
         </header>
         {this.props.children}
