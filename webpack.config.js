@@ -44,7 +44,8 @@ module.exports = {
                 include: [
                   APP_PATH,
                   path.resolve(ROOT_PATH, 'styles'),
-                  path.resolve(ROOT_PATH, 'node_modules/font-awesome')
+                  path.resolve(ROOT_PATH, 'node_modules/font-awesome'),
+                  path.resolve(ROOT_PATH, 'node_modules/react-validation-form'),
                 ]
             },
             {

@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
+import 'react-validation-form/src/form.css';
 import App from './containers/App';
 import routes from './routes';
 import configureStore from './store/configureStore';

@@ -5,13 +5,18 @@ import '../../styles/underline-input.scss';
 const propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
+  type: PropTypes.string,
+};
+
+const defaultProps = {
+  type: 'text',
 };
 
 export default class UnderlineInput extends Component {
   render() {
     return (
       <input
-        type="text"
+        type={this.props.type}
         className="vp-underline-input"
         placeholder={this.props.placeholder}
         value={this.props.value}
@@ -22,3 +27,4 @@ export default class UnderlineInput extends Component {
 }
 
 UnderlineInput.propTypes = propTypes;
+UnderlineInput.defaultProps = defaultProps;

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { createForm, FormItem } from 'react-validation-form';
+import { createForm } from 'react-validation-form';
+import FormItem from './FormItem';
 import UnderlineInput from './UnderlineInput';
 import Button from './Button';
 import '../../styles/login.scss';
@@ -36,6 +37,7 @@ class LoginForm extends Component {
         </FormItem>
         <FormItem>
           <UnderlineInput
+            type="password"
             placeholder="密码"
             {...this.props.form.getInputProps('password', {
               initialValue: '',
@@ -60,7 +62,7 @@ class LoginForm extends Component {
           style={{
             width: '100px',
             display: 'block',
-            margin: '16px 0',
+            margin: '24px 0 16px 0',
           }}
         >
         登录

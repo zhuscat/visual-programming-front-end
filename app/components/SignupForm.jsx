@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { createForm, FormItem } from 'react-validation-form';
+import { createForm } from 'react-validation-form';
+import FormItem from './FormItem';
 import UnderlineInput from './UnderlineInput';
 import Button from './Button';
 import '../../styles/login.scss';
@@ -13,11 +14,11 @@ const propTypes = {
 class SignupForm extends Component {
   render() {
     return (
-      <form className="vp-login">
+      <form className="vp-login" autoComplete={false}>
         <FormItem>
           <UnderlineInput
             placeholder="用户名"
-            {...this.props.form.getInputProps('username', {
+            {...this.props.form.getInputProps('vp-username', {
               initialValue: '',
               onlyFirst: true,
               validates: [
@@ -36,6 +37,7 @@ class SignupForm extends Component {
         </FormItem>
         <FormItem>
           <UnderlineInput
+            type="password"
             placeholder="密码"
             {...this.props.form.getInputProps('password', {
               initialValue: '',
@@ -56,6 +58,7 @@ class SignupForm extends Component {
         </FormItem>
         <FormItem>
           <UnderlineInput
+            type="password"
             placeholder="确认密码"
             {...this.props.form.getInputProps('passwordConfirm', {
               initialValue: '',
@@ -67,6 +70,15 @@ class SignupForm extends Component {
                     type: 'string',
                     min: 5,
                     max: 20,
+                  }, {
+                    validator: (value, rule, formdata, callback) => {
+                      const { password } = formdata;
+                      if (value !== password) {
+                        callback(new Error('两次输入的密码必须一致'));
+                      } else {
+                        callback();
+                      }
+                    },
                   }],
                   trigger: ['onChange', 'onBlur'],
                 },
@@ -80,7 +92,7 @@ class SignupForm extends Component {
           style={{
             width: '100px',
             display: 'block',
-            margin: '16px 0',
+            margin: '24px 0 16px 0',
           }}
         >
         注册
@@ -91,6 +103,6 @@ class SignupForm extends Component {
   }
 }
 
-LoginForm.propTypes = propTypes;
+SignupForm.propTypes = propTypes;
 
-export default createForm(LoginForm);
+export default createForm(SignupForm);
