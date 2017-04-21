@@ -11,10 +11,10 @@ class ProcedureSectionContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { entities, procedureArea } = state;
+  const { entities, program } = state;
   return {
     entities,
-    nodes: procedureArea,
+    nodes: program.procedureArea,
   };
 }
 

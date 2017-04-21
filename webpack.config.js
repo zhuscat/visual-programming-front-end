@@ -1,5 +1,6 @@
 var path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
+var webpack = require('webpack');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
@@ -14,11 +15,6 @@ module.exports = {
         path: BUILD_PATH,
         filename: '[name].[hash].js'
     },
-    plugins: [
-        new HtmlwebpackPlugin({
-            title: 'Visualize'
-        })
-    ],
     devServer: {
         historyApiFallback: true,
         hot: false,
@@ -33,9 +29,10 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'babel',
-                include: APP_PATH,
+                exclude: /node_modules/,
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react', 'stage-0'],
+                    plugins: ['transform-runtime', 'transform-object-rest-spread']
                 }
             },
             {
@@ -46,6 +43,7 @@ module.exports = {
                   path.resolve(ROOT_PATH, 'styles'),
                   path.resolve(ROOT_PATH, 'node_modules/font-awesome'),
                   path.resolve(ROOT_PATH, 'node_modules/react-validation-form'),
+                  path.resolve(ROOT_PATH, 'node_modules/react-spinkit'),
                 ]
             },
             {
@@ -53,5 +51,15 @@ module.exports = {
                 loader: 'url-loader?limit=50000&name=[path][name].[ext]'
             },
         ]
-    }
+    },
+    plugins: [
+        new HtmlwebpackPlugin({
+            title: 'Visualize'
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production'),
+            '__SERVER__': false,
+            '__CLIENT__': true,
+        }),
+    ],
 };

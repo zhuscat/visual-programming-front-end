@@ -1,18 +1,32 @@
 import React from 'react';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 import App from './containers/App';
 import Editor from './containers/Editor';
-import Login from './components/Login';
-import LoginForm from './components/LoginForm';
+import Login from './containers/login-form';
 import SignupForm from './components/SignupForm';
-import requireAuth from './containers/highorder/RequireAuth';
+import ProgramLibrary from './containers/program-library';
 
-export default (
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={requireAuth(Editor)} />
-      <Route path="login" component={LoginForm} />
-      <Route path="signup" component={SignupForm} />
-    </Route>
-  </Router>
-);
+const getRoutes = (history, store) => {
+  const requireAuth = (nexState, replace, callback) => {
+    const { user: { token } } = store.getState();
+    if (!token) {
+      replace({
+        pathname: '/login',
+        state: { nextPathname: nexState.location.pathname },
+      });
+    }
+    callback();
+  };
+  return (
+    <Router history={history}>
+      <Route path="/" component={App}>
+        <IndexRoute component={Editor} onEnter={requireAuth} />
+        <Route path="login" component={Login} />
+        <Route path="signup" component={SignupForm} />
+        <Route path="library" component={ProgramLibrary} onEnter={requireAuth} />
+      </Route>
+    </Router>
+  );
+};
+
+export default getRoutes;

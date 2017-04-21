@@ -1,10 +1,18 @@
-import { createStore } from 'redux';
-import rootReducer from '../reducers/rootReducer';
+import { createStore, compose, applyMiddleware } from 'redux';
+import createSagaMiddleware, { END } from 'redux-saga';
+import rootReducer from '../reducers';
+import DevTools from '../containers/devtools';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const enhancer = compose(
+  applyMiddleware(sagaMiddleware),
+  DevTools.instrument()
+);
 
 export default function configureStore(initialState) {
-  /* eslint-disable */
-  return createStore(rootReducer, initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
-  /* eslint-enable */
+  const store = createStore(rootReducer, initialState, enhancer);
+  store.runSaga = sagaMiddleware.run;
+  store.close = () => store.dispatch(END);
+  return store;
 }

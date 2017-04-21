@@ -11,7 +11,14 @@ class SidebarContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  return state;
+  const { entities, program } = state;
+  const { id, variableArea, procedureArea } = program;
+  return {
+    entities,
+    id,
+    variableArea,
+    procedureArea,
+  };
 }
 
 export default connect(mapStateToProps)(SidebarContainer);

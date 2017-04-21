@@ -11,10 +11,10 @@ class VariableSectionContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { entities, variableArea } = state;
+  const { entities, program } = state;
   return {
     entities,
-    nodes: variableArea,
+    nodes: program.variableArea,
   };
 }
 

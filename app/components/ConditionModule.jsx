@@ -6,6 +6,7 @@ import Modal from './Modal';
 import ModuleBlock from './ModuleBlock';
 import { addWhile, deleteWhile } from '../actions/WhileActions';
 import { addOperator } from '../actions/OperatorActions';
+import { addUnaryOperator } from '../actions/UnaryOperatorActions';
 import { addIf } from '../actions/IfActions';
 import VariableModule from './VariableModule';
 import InputModule from './InputModule';
@@ -45,6 +46,8 @@ export default class ConditionModule extends Component {
     this.handleAddConditionButtonClick = this.handleAddConditionButtonClick.bind(this);
     this.handleAddModuleButtonClick = this.handleAddModuleButtonClick.bind(this);
     this.operatorModuleBlockClick = this.operatorModuleBlockClick.bind(this);
+    this.unaryOperatorModuleBlockClick = this.unaryOperatorModuleBlockClick.bind(this);
+    this.conditionUnaryOperatorModuleBlockClick = this.conditionUnaryOperatorModuleBlockClick.bind(this);
     this.whileModuleBlockClick = this.whileModuleBlockClick.bind(this);
     this.conditionOperatorModuleBlockClick = this.conditionOperatorModuleBlockClick.bind(this);
     this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
@@ -68,6 +71,16 @@ export default class ConditionModule extends Component {
     const { dispatch } = this.props;
     dispatch(addOperator({ parentId: this.props.id, playload: 'procedure' }));
     this.setState({ modalOpen: false });
+  }
+
+  unaryOperatorModuleBlockClick() {
+    const { dispatch } = this.props;
+    dispatch(addUnaryOperator({ parentId: this.props.id, playload: 'procedure' }));
+  }
+
+  conditionUnaryOperatorModuleBlockClick() {
+    const { dispatch } = this.props;
+    dispatch(addUnaryOperator({ parentId: this.props.id, playload: 'condition' }));
   }
 
   whileModuleBlockClick() {
@@ -144,6 +157,11 @@ export default class ConditionModule extends Component {
                   name="操作"
                   onClick={this.conditionOperatorModuleBlockClick}
                 />
+                <ModuleBlock
+                  module="unaryOperator"
+                  name="一元操作"
+                  onClick={this.conditionUnaryOperatorModuleBlockClick}
+                />
               </Modal> :
               null
             }
@@ -164,6 +182,11 @@ export default class ConditionModule extends Component {
                   module="operator"
                   name="操作"
                   onClick={this.operatorModuleBlockClick}
+                />
+                <ModuleBlock
+                  module="unaryOperator"
+                  name="一元操作"
+                  onClick={this.unaryOperatorModuleBlockClick}
                 />
                 <ModuleBlock
                   module="while"

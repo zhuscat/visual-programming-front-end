@@ -1,0 +1,13 @@
+.program-card {
+  width: 300px;
+  height: 150px;
+  padding: 16px;
+  margin: 32px;
+  display: inline-block;
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.2);
+
+  &__title {
+    font-size: 32px;
+  }
+}

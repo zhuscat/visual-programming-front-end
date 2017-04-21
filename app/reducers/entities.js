@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import * as actions from '../actions/program';
 
 const modules = (state = {}, action) => {
   switch (action.type) {
@@ -39,6 +40,9 @@ const modules = (state = {}, action) => {
         }
         return _.omit(shallowState, action.module.id);
       }
+    case actions.FETCH_PROGRAM.SUCCESS:
+      // 替换掉 entities
+      return action.entities;
     default:
       return state;
   }

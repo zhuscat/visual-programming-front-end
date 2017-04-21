@@ -1,3 +1,5 @@
+import * as actions from '../actions/program';
+
 const variableArea = (state = [], action) => {
   switch (action.type) {
     case 'CREATE_MODULE':
@@ -16,6 +18,8 @@ const variableArea = (state = [], action) => {
         }
         return state;
       }
+    case actions.FETCH_PROGRAM.SUCCESS:
+      return actions.variableArea;
     default:
       return state;
   }

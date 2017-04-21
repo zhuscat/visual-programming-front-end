@@ -1,3 +1,5 @@
+import * as actions from '../actions/program';
+
 const procedureArea = (state = [], action) => {
   switch (action.type) {
     case 'CREATE_MODULE':
@@ -16,6 +18,8 @@ const procedureArea = (state = [], action) => {
         }
         return state;
       }
+    case actions.FETCH_PROGRAM.SUCCESS:
+      return state.procedureArea;
     default:
       return state;
   }

@@ -9,6 +9,7 @@ import '../../styles/link.scss';
 
 const propTypes = {
   form: PropTypes.object,
+  onSubmit: PropTypes.func,
 };
 
 class LoginForm extends Component {
@@ -25,9 +26,9 @@ class LoginForm extends Component {
                 {
                   rules: [{
                     required: true,
-                    type: 'string',
-                    min: 5,
-                    max: 20,
+                    // type: 'string',
+                    // min: 5,
+                    // max: 20,
                   }],
                   trigger: ['onChange', 'onBlur'],
                 },
@@ -46,9 +47,9 @@ class LoginForm extends Component {
                 {
                   rules: [{
                     required: true,
-                    type: 'string',
-                    min: 5,
-                    max: 20,
+                    // type: 'string',
+                    // min: 5,
+                    // max: 20,
                   }],
                   trigger: ['onChange', 'onBlur'],
                 },
@@ -63,6 +64,12 @@ class LoginForm extends Component {
             width: '100px',
             display: 'block',
             margin: '24px 0 16px 0',
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.form.validateAllInputs((err, namevalues) => {
+              this.props.onSubmit(namevalues);
+            });
           }}
         >
         登录
