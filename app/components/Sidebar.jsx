@@ -13,6 +13,7 @@ const propTypes = {
   onProgramTitleChange: PropTypes.func,
   onProgramDescChange: PropTypes.func,
   addProgram: PropTypes.func,
+  updateProgram: PropTypes.func,
   name: PropTypes.string,
   desc: PropTypes.string,
 };
@@ -26,12 +27,24 @@ export default class Sidebar extends Component {
     this.handleProgramDescChange = this.handleProgramDescChange.bind(this);
   }
 
+  onUpdateButtonClick() {
+    const { name, entities, procedureArea, variableArea } = this.props;
+    const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
+    this.props.updateProgram({
+      program: {
+        name,
+        structInfo,
+      },
+    });
+  }
+
   onSaveButtonClick() {
     const { name, entities, procedureArea, variableArea } = this.props;
     /**
      * 当调用两次 denormalize 的时候出现错误
      * 其原因应该是这个函数是有副作用的，改变的原来的对象
      * TODO: 将其改为无副作用的
+     * DONE: 改完了
      */
     // console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
     const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
@@ -82,7 +95,7 @@ export default class Sidebar extends Component {
             display: 'block',
             margin: '16px auto',
           }}
-          onClick={this.onSaveButtonClick}
+          onClick={this.props.id ? this.onUpdateButtonClick : this.onSaveButtonClick}
         >
           {this.props.id ? '更新' : '保存'}
         </Button>

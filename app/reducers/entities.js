@@ -6,10 +6,31 @@ const modules = (state = {}, action) => {
     case 'CREATE_MODULE':
       if (action.module.parentId && action.module.playload) {
         // TODO: 暂时先 mutable 吧，看一下是否可行，之后改成 immutable
+        // DONE: 改成不可变的了
         if (action.module.playload === 'procedure') {
-          state[action.module.parentId][action.module.playload].push(action.module.id);
+          // state[action.module.parentId][action.module.playload].push(action.module.id);
+          return {
+            ...state,
+            [action.module.parentId]: {
+              ...state[action.module.parentId],
+              procedure: [...state[action.module.parentId].procedure, action.module.id],
+            },
+            [action.module.id]: {
+              ...action.module,
+            },
+          };
         } else if (action.module.playload === 'condition') {
-          state[action.module.parentId][action.module.playload] = action.module.id;
+          // state[action.module.parentId][action.module.playload] = action.module.id;
+          return {
+            ...state,
+            [action.module.parentId]: {
+              ...state[action.module.parentId],
+              condition: action.module.id,
+            },
+            [action.module.id]: {
+              ...action.module,
+            },
+          };
         }
       }
       return {
@@ -27,17 +48,26 @@ const modules = (state = {}, action) => {
         },
       };
     case 'DELETE_MODULE':
+      // 关于这里代码的一点记录
+      // 在删除一个模块的时候（比如删除 WHILE 模块）
+      // 里面可能嵌套了许多其他模块
+      // 这个时候这个 DELETE_MODULE 只能删除其 condition 和 procedure 对应在 entities 中的模块
+      // 如果有更深的层级，就不会删除
+      // 当然，其实根本就不用删除任何这个模块引用的模块，因为在 procedureArea 和 variableArea 中已经
+      // 不会引用到相关的模块了
       {
-        const shallowState = Object.assign({}, state);
-        const m = state[action.module.id];
-        if (m) {
+        const shallowState = {
+          ...state,
+        };
+        const deletedModule = state[action.module.id];
+        if (deletedModule) {
           // 因为 condition 变成字符串了，所以就直接删除 m.condition
           // m.condition 是键值
-          if (m.condition) {
-            delete shallowState[m.condition];
+          if (deletedModule.condition) {
+            delete shallowState[deletedModule.condition];
           }
-          if (m.procedure) {
-            m.procedure.map((id) => {
+          if (deletedModule.procedure) {
+            deletedModule.procedure.map((id) => {
               delete shallowState[id];
             });
           }

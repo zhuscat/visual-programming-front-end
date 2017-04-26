@@ -28,4 +28,5 @@ export default connect(mapStateToProps, {
   onProgramTitleChange: programActions.titleChange,
   onProgramDescChange: programActions.descChange,
   addProgram: programActions.addProgram.request,
+  updateProgram: programActions.updateProgram.request,
 })(SidebarContainer);

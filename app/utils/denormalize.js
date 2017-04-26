@@ -1,36 +1,54 @@
 // TODO: 将函数改成没有副作用的
+/**
+ * 正在把函数改成无副作用的，这里给出一些记录
+ * value 就是一个程序模块，不要去修改 value
+ */
 function denormalize2(value, entities) {
-  if (!value) {
-    return {};
-  }
+  const target = {
+    ...value,
+  };
   let condition = {};
   const procedure = [];
-  if (('first' in value) && ('firstType' in value) && value.firstType === 'VAR') {
-    value.first = entities[value.first].name;
+  if (!value) {
+    console.log('遇到 value 为空的情况？');
+    return {};
   }
-  if (('second' in value) && ('secondType' in value) && value.secondType === 'VAR') {
-    value.second = entities[value.second].name;
+  if (('first' in target) && ('firstType' in target) && target.firstType === 'VAR') {
+    // 这里我要把需求问清楚
+    // 如果一个引用消失了，我生成那个值是多少
+    if (entities[target.first]) {
+      target.first = entities[target.first].name;
+    } else {
+      target.first = '';
+    }
   }
-  if (value.assignValue) {
-    value.assignValue = entities[value.assignValue].name;
+  if (('second' in target) && ('secondType' in target) && target.secondType === 'VAR') {
+    if (entities[target.second]) {
+      target.second = entities[target.second].name;
+    } else {
+      target.second = '';
+    }
   }
-  if (!('condition' in value) || !('procedure' in value)) {
-    return value;
+  if (target.assignValue) {
+    target.assignValue = entities[target.assignValue].name;
   }
-  if (value.condition in entities) {
-    condition = denormalize2(entities[value.condition], entities);
+  if (!('condition' in target) || !('procedure' in target)) {
+    return target;
+  }
+  if (target.condition in entities) {
+    condition = denormalize2(entities[target.condition], entities);
   }
 
-  for (let v of value.procedure) {
+  for (const v of target.procedure) {
     if (v in entities) {
       procedure.push(denormalize2(entities[v], entities));
     }
   }
 
-  value.condition = condition;
-  value.procedure = procedure;
+  target.condition = condition;
+  target.procedure = procedure;
 
-  return value;
+  return target;
 }
 
 export default function denormalize(data) {
