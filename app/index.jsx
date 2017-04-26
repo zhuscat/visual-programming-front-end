@@ -7,6 +7,7 @@ import DevTools from './containers/devtools';
 import rootSaga from './sagas';
 import { history } from './services';
 import 'react-validation-form/src/form.css';
+import '../node_modules/font-awesome/css/font-awesome.css';
 import '../styles/base.scss';
 
 const store = configureStore();

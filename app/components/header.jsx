@@ -11,11 +11,13 @@ export default class Header extends Component {
     return (
       <nav className="vp-header-nav">
         <NavItem
+          type="link"
           link="/login"
           iconName="denglu"
           title="登录"
         />
         <NavItem
+          type="link"
           link="/signup"
           iconName="geren"
           title="注册"
@@ -27,16 +29,19 @@ export default class Header extends Component {
     return (
       <nav className="vp-header-nav">
         <NavItem
+          type="link"
           link="/"
           iconName="dianping"
           title="编程"
         />
         <NavItem
-          link="/login"
+          type="link"
+          link="/library"
           iconName="jihe"
           title="集合"
         />
         <NavItem
+          type="link"
           link="/user"
           iconName="geren"
           title="信息"
@@ -52,7 +57,7 @@ export default class Header extends Component {
   render() {
     return (
       <header className="vp-header clearfix">
-        <h1 className="vp-header-brand">可视化编程</h1>
+        <h1 className="vp-header-brand"><i className="iconfont icon-code vp-header-brand__icon" /><span>可视化编程</span></h1>
         {this.props.user.token ?
           this.renderLogin() :
           this.renderNotLogin()

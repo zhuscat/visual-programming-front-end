@@ -9,17 +9,29 @@ import * as programActions from '../actions/program';
 const propTypes = {
   isLoading: PropTypes.bool,
   items: PropTypes.array,
+  fetchAllProgram: PropTypes.func,
   fetchProgram: PropTypes.func,
+  createProgram: PropTypes.func,
 };
 
 class ProgramLibraryContainer extends Component {
   constructor(props) {
     super(props);
     this.handleCardClick = this.handleCardClick.bind(this);
+    this.handleCreateClick = this.handleCreateClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchAllProgram();
   }
 
   handleCardClick(id) {
-    this.props.fetchProgram(id);
+    this.props.fetchProgram({ id });
+    history.push('/');
+  }
+
+  handleCreateClick() {
+    this.props.createProgram();
     history.push('/');
   }
 
@@ -30,6 +42,7 @@ class ProgramLibraryContainer extends Component {
         <ProgramLibrary
           items={this.props.items}
           onCardClick={this.handleCardClick}
+          onCreateClick={this.handleCreateClick}
         />
       </div>
     );
@@ -48,7 +61,9 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
+  fetchAllProgram: programActions.fetchAllProgram.request,
   fetchProgram: programActions.fetchProgram.request,
+  createProgram: programActions.createLocal,
 })(ProgramLibraryContainer);
 
 

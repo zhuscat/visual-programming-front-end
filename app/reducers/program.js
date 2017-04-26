@@ -53,12 +53,24 @@ const program = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        id: action.id,
+        name: action.name,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
       };
     case actions.FETCH_PROGRAM.FAILURE:
       return {
         ...state,
+        isLoading: false,
+        variableArea: [],
+        procedureArea: [],
+      };
+    case actions.CREATE_PROGRAM_LOCAL:
+      return {
+        ...state,
+        id: '',
+        name: '',
+        desc: '',
         isLoading: false,
         variableArea: [],
         procedureArea: [],
@@ -93,6 +105,16 @@ const program = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+    case actions.PROGRAM_TITLE_CHANGE:
+      return {
+        ...state,
+        name: action.value,
+      };
+    case actions.PROGRAM_DESC_CHANGE:
+      return {
+        ...state,
+        desc: action.desc,
       };
     default:
       return state;

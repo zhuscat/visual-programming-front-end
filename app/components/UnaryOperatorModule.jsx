@@ -8,8 +8,8 @@ import { changeUnaryOperator, deleteUnaryOperator } from '../actions/UnaryOperat
 
 const propTypes = {
   id: PropTypes.string,
-  val: PropTypes.string,
-  valType: PropTypes.string,
+  first: PropTypes.string,
+  firstType: PropTypes.string,
   op: PropTypes.string,
   assignValue: PropTypes.string,
   entities: PropTypes.object,
@@ -18,7 +18,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  val: '',
+  first: '',
   op: '',
   parentId: '',
 };
@@ -26,11 +26,11 @@ const defaultProps = {
 const opTypes = [
   {
     text: '＋',
-    value: 'plus',
+    value: 'unary_plus',
   },
   {
     text: '－',
-    value: 'minus',
+    value: 'unary_minus',
   },
 ];
 
@@ -81,8 +81,8 @@ export default class UnaryOperatorModule extends Component {
     const { dispatch } = this.props;
     dispatch(changeUnaryOperator({
       id: this.props.id,
-      val: value,
-      valType: 'VAR',
+      fisrt: value,
+      firstType: 'VAR',
       op: this.props.op,
       assignValue: this.props.assignValue,
     }));
@@ -92,8 +92,8 @@ export default class UnaryOperatorModule extends Component {
     const { dispatch } = this.props;
     dispatch(changeUnaryOperator({
       id: this.props.id,
-      val: this.props.val,
-      valType: this.props.valType,
+      first: this.props.first,
+      firstType: this.props.firstType,
       op: this.props.op,
       assignValue: value,
     }));
@@ -103,8 +103,8 @@ export default class UnaryOperatorModule extends Component {
     const { dispatch } = this.props;
     dispatch(changeUnaryOperator({
       id: this.props.id,
-      val: value,
-      valType: 'immediate',
+      first: value,
+      firstType: 'immediate',
       op: this.props.op,
       assignValue: this.props.assignValue,
     }));
@@ -114,8 +114,8 @@ export default class UnaryOperatorModule extends Component {
     const { dispatch } = this.props;
     dispatch(changeUnaryOperator({
       id: this.props.id,
-      val: this.props.val,
-      valType: this.props.valType,
+      first: this.props.first,
+      firstType: this.props.firstType,
       op: this.getNextOpratorValue(),
       assignValue: this.props.assignValue,
     }));
@@ -143,7 +143,7 @@ export default class UnaryOperatorModule extends Component {
   }
 
   render() {
-    const firstInputValue = this.props.valType === 'immediate' ? this.props.val : '';
+    const firstInputValue = this.props.firstType === 'immediate' ? this.props.first : '';
     return (
       <div className="vp-operator-module">
         <div className="vp-operator-module__title">
@@ -176,12 +176,12 @@ export default class UnaryOperatorModule extends Component {
           </div>
           <div className="vp-operator-module__item">
             <ChooseInput
-              value={this.props.val}
+              value={this.props.first}
               onOptionSelect={this.handleFisrtOperandSelect}
               options={this.getChooseOptions()}
               handleWithInputValueChange={this.handleFirstWithInputChange}
               inputValue={firstInputValue}
-              showInputValue={this.props.valType === 'immediate'}
+              showInputValue={this.props.firstType === 'immediate'}
               withInput
             />
           </div>

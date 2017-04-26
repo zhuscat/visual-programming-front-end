@@ -18,8 +18,8 @@ const variableArea = (state = [], action) => {
         }
         return state;
       }
-    case actions.FETCH_PROGRAM.SUCCESS:
-      return actions.variableArea;
+    // case actions.FETCH_PROGRAM.SUCCESS:
+    //   return state;
     default:
       return state;
   }

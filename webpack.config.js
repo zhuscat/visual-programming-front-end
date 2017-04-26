@@ -44,6 +44,7 @@ module.exports = {
                   path.resolve(ROOT_PATH, 'node_modules/font-awesome'),
                   path.resolve(ROOT_PATH, 'node_modules/react-validation-form'),
                   path.resolve(ROOT_PATH, 'node_modules/react-spinkit'),
+                  path.resolve(ROOT_PATH, 'node_modules/react-s-alert'),
                 ]
             },
             {
@@ -54,7 +55,7 @@ module.exports = {
     },
     plugins: [
         new HtmlwebpackPlugin({
-            title: 'Visualize'
+            title: '可视化编程'
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),

@@ -28,7 +28,7 @@ export default class NavItem extends Component {
     return (
       <div
         className="vp-header-nav__item"
-        onClick={this.onButtonClick}
+        onClick={this.props.onButtonClick}
       >
         <i className={`iconfont icon-${this.props.iconName} vp-header-nav__icon`} />
         <span>{`${this.props.title}`}</span>

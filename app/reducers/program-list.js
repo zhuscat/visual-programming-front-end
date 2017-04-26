@@ -16,7 +16,7 @@ const programList = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        items: actions.response,
+        items: action.response,
       };
     case actions.FETCH_ALL_PROGRAMS.FAILURE:
       return {

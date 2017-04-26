@@ -16,13 +16,15 @@ export default function user(state = initialState, action) {
         isLoading: true,
       };
     case actions.USER_LOGIN.SUCCESS:
+      console.log('login success');
+      console.log(action);
       return {
         ...state,
         isAuthenticated: true,
         isLoading: false,
         username: action.username,
         email: action.email,
-        token: action.response.data.token,
+        token: action.response.token,
       };
     case actions.USER_LOGIN.FAILURE:
       return {
@@ -47,6 +49,14 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+      };
+    case actions.USER_SIGNOUT:
+      return {
+        isAuthenticated: false,
+        isLoading: false,
+        username: '',
+        email: '',
+        token: '',
       };
     default:
       return state;

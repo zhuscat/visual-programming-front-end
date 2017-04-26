@@ -10,6 +10,11 @@ const propTypes = {
   entities: PropTypes.object,
   procedureArea: PropTypes.array,
   variableArea: PropTypes.array,
+  onProgramTitleChange: PropTypes.func,
+  onProgramDescChange: PropTypes.func,
+  addProgram: PropTypes.func,
+  name: PropTypes.string,
+  desc: PropTypes.string,
 };
 
 export default class Sidebar extends Component {
@@ -17,19 +22,39 @@ export default class Sidebar extends Component {
     super(props);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.onExecButtonClick = this.onExecButtonClick.bind(this);
+    this.handleProgramTitleChange = this.handleProgramTitleChange.bind(this);
+    this.handleProgramDescChange = this.handleProgramDescChange.bind(this);
   }
 
   onSaveButtonClick() {
-    const { entities, procedureArea, variableArea } = this.props;
-    console.log(variableArea);
+    const { name, entities, procedureArea, variableArea } = this.props;
+    /**
+     * 当调用两次 denormalize 的时候出现错误
+     * 其原因应该是这个函数是有副作用的，改变的原来的对象
+     * TODO: 将其改为无副作用的
+     */
     // console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
-    console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea })));
+    const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
+    this.props.addProgram({
+      program: {
+        name,
+        structInfo,
+      },
+    });
   }
 
   onExecButtonClick() {
     if (window) {
       window.open(`/v1/program/gen/${this.props.id}`);
     }
+  }
+
+  handleProgramTitleChange(event) {
+    this.props.onProgramTitleChange(event.target.value);
+  }
+
+  handleProgramDescChange(event) {
+    this.props.onProgramDescChange(event.target.value);
   }
 
   // 暂时先弄成没有保存的时候就不显示执行按钮
@@ -39,8 +64,16 @@ export default class Sidebar extends Component {
     return (
       <div className="vp-sidebar">
         <div className="vp-sidebar__title">信息</div>
-        <UnderlineInput placeholder="编辑标题" />
-        <UnderlineInput placeholder="编辑描述" />
+        <UnderlineInput
+          placeholder="编辑标题"
+          value={this.props.name}
+          onChange={this.handleProgramTitleChange}
+        />
+        <UnderlineInput
+          placeholder="编辑描述"
+          value={this.props.desc}
+          onChange={this.props.onProgramDescChange}
+        />
         <Button
           type="hollow"
           radius

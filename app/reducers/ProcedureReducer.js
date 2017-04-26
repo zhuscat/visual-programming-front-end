@@ -18,8 +18,8 @@ const procedureArea = (state = [], action) => {
         }
         return state;
       }
-    case actions.FETCH_PROGRAM.SUCCESS:
-      return state.procedureArea;
+    // case actions.FETCH_PROGRAM.SUCCESS:
+    //   return state.procedureArea;
     default:
       return state;
   }

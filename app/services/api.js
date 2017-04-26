@@ -91,7 +91,6 @@ export const login = (username, password) => callApi({
 export const register = (username, password, email) => callApi({
   endpoint: '/v1/user/reg/',
   method: 'PUT',
-  token,
   data: {
     username,
     password,
@@ -99,9 +98,10 @@ export const register = (username, password, email) => callApi({
   },
 });
 
-export const changepassword = (oldpassword, newpassword) => callApi({
+export const changepassword = (oldpassword, newpassword, token) => callApi({
   endpoint: '/v1/user/psw',
   method: 'POST',
+  token,
   data: {
     oldPassword: oldpassword,
     newPassword: newpassword,
@@ -119,7 +119,7 @@ export const fetchAllPrograms = (token) => callApi({
   token,
 });
 
-export const addProgram = (newProgram) => callApi({
+export const addProgram = (newProgram, token) => callApi({
   endpoint: '/v1/program/',
   method: 'PUT',
   data: newProgram,

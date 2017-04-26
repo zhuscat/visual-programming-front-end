@@ -5,15 +5,15 @@ import procedureArea from './ProcedureReducer';
 import program from './program';
 import user from './user';
 import programList from './program-list';
+import error from './error';
 
 
 const rootReducer = combineReducers({
   entities,
-  variableArea,
-  procedureArea,
   program,
   user,
   programList,
+  error,
 });
 
 export default rootReducer;

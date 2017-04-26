@@ -21,7 +21,10 @@ export default class ProgramCard extends Component {
 
   render() {
     return (
-      <div className="program-card">
+      <div
+        className="program-card"
+        onClick={this.handleClick}
+      >
         <div className="program-card__title">
           {this.props.title}
         </div>

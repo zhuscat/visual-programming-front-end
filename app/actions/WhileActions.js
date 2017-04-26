@@ -7,7 +7,7 @@ export const addWhile = ({ parentId, playload, area }) => (
     module: {
       id: uuid('WHILE'),
       moduleType: 'WHILE',
-      condition: [],
+      condition: '',
       procedure: [],
       parentId,
       playload,

@@ -6,7 +6,7 @@ export const addIf = ({ parentId, playload, area }) => ({
   module: {
     id: uuid('IF'),
     moduleType: 'IF',
-    condition: [],
+    condition: '',
     procedure: [],
     parentId,
     playload,

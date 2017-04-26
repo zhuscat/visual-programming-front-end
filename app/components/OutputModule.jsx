@@ -11,7 +11,7 @@ const propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   dtype: PropTypes.string,
-  value: PropTypes.string,
+  desc: PropTypes.string,
   types: PropTypes.array,
   dispatch: PropTypes.func,
 };
@@ -19,7 +19,7 @@ const propTypes = {
 const defaultProps = {
   name: '',
   dtype: '',
-  value: '',
+  desc: '',
   types: [],
   onChange: noop,
 };
@@ -44,7 +44,7 @@ export default class OutputModule extends Component {
       id: this.props.id,
       name: value,
       dtype: this.props.dtype,
-      value: this.props.value,
+      desc: this.props.desc,
     }));
   }
 
@@ -54,17 +54,17 @@ export default class OutputModule extends Component {
       id: this.props.id,
       name: this.props.name,
       dtype: value,
-      value: this.props.value,
+      desc: this.props.desc,
     }));
   }
 
-  handleValueInputChange(value) {
+  handleValueInputChange(desc) {
     const { dispatch } = this.props;
     dispatch(changeOutput({
       id: this.props.id,
       name: this.props.name,
       dtype: this.props.dtype,
-      value,
+      desc,
     }));
   }
 
@@ -95,9 +95,9 @@ export default class OutputModule extends Component {
             />
           </div>
           <div className="vp-output-module__item">
-            <label className="vp-output-module__name">取值</label>
+            <label className="vp-output-module__name">描述</label>
             <TextInput
-              value={this.props.value}
+              value={this.props.desc}
               onChange={this.handleValueInputChange}
             />
           </div>

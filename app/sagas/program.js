@@ -3,34 +3,31 @@ import { takeEvery } from 'redux-saga';
 import { api, history } from '../services';
 import * as programActions from '../actions/program';
 
+/**
+ * 此时进来的 value 为 object
+ */
 function procedureNodeTransform(value, target, nameMap) {
   if (('first' in value) && ('firstType' in value) && value.firstType === 'VAR') {
     // reassign...but simple
     value.first = nameMap[value.first];
   }
   if (('second' in value) && ('secondType' in value) && value.secondType === 'VAR') {
-    value.secondType = nameMap[value.secondType];
+    value.second = nameMap[value.second];
   }
-  if (value.assign) {
-    value.assign = nameMap[value.assign];
+  if (value.assignValue) {
+    value.assignValue = nameMap[value.assignValue];
   }
   if (value.condition) {
-    value.condition.forEach(v => {
-      procedureNodeTransform(v, target, nameMap);
-    });
+    procedureNodeTransform(value.condition, target, nameMap);
   }
   if (value.procedure) {
     value.procedure.forEach(v => {
       procedureNodeTransform(v, target, nameMap);
     });
   }
-  const condition = [];
   const procedure = [];
   if (value.condition) {
-    value.condition.forEach(v => {
-      condition.push(v.id);
-    });
-    value.condition = condition;
+    value.condition = value.condition.id;
   }
   if (value.procedure) {
     value.procedure.forEach(v => {
@@ -43,7 +40,7 @@ function procedureNodeTransform(value, target, nameMap) {
 
 function responseTransform(response) {
   const { programId, username, name, structInfo } = response;
-  const json = JSON.stringify(structInfo);
+  const json = JSON.parse(structInfo);
   const nameMap = {};
   const target = {
     entities: {},
@@ -64,23 +61,29 @@ function responseTransform(response) {
    *    对其进行递归
    */
   json.procedureArea.forEach(value => {
-    procedureNodeTransform(value);
+    procedureNodeTransform(value, target, nameMap);
     target.procedureArea.push(value.id);
   });
-  return target;
+  return {
+    name,
+    program: target,
+  };
 }
+
 
 export function* runFetchProgram({ id }) {
   const token = yield select(state => state.user.token);
   const { response, error } = yield call(api.fetchProgram, id, token);
   if (response) {
     // 对 response 进行操作
-    const { entities, variableArea, procedureArea } = responseTransform(response);
+    const { name, program } = responseTransform(response);
+    const { variableArea, procedureArea, entities } = program;
     yield put(programActions.fetchProgram.success({
       id,
-      entities,
+      name,
       variableArea,
       procedureArea,
+      entities,
     }, response));
   } else {
     yield put(programActions.fetchProgram.failure({ id }, error));
@@ -91,9 +94,9 @@ export function* runFetchAllProgram() {
   const token = yield select(state => state.user.token);
   const { response, error } = yield call(api.fetchAllPrograms, token);
   if (response) {
-    yield put(programActions.fetchAllPrograms.success({ id }, response));
+    yield put(programActions.fetchAllProgram.success({ }, response));
   } else {
-    yield put(programActions.fetchAllPrograms.failure({ id }, error));
+    yield put(programActions.fetchAllProgram.failure({ }, error));
   }
 }
 

@@ -12,49 +12,33 @@ const propTypes = {
   onSubmit: PropTypes.func,
 };
 
-class SignupForm extends Component {
+class PasswordForm extends Component {
   render() {
     return (
       <form className="vp-login" autoComplete={false}>
         <FormItem>
           <UnderlineInput
-            placeholder="用户名"
-            {...this.props.form.getInputProps('username', {
-              initialValue: '',
-              onlyFirst: true,
-              validates: [
-                {
-                  rules: [{
-                    required: true,
-                  }],
-                  trigger: ['onChange', 'onBlur'],
-                },
-              ],
-            })}
-          />
-        </FormItem>
-        <FormItem>
-          <UnderlineInput
-            placeholder="邮箱"
-            {...this.props.form.getInputProps('email', {
-              initialValue: '',
-              onlyFirst: true,
-              validates: [
-                {
-                  rules: [{
-                    required: true,
-                  }],
-                  trigger: ['onChange', 'onBlur'],
-                },
-              ],
-            })}
-          />
-        </FormItem>
-        <FormItem>
-          <UnderlineInput
-            type="password"
             placeholder="密码"
-            {...this.props.form.getInputProps('password', {
+            type="password"
+            {...this.props.form.getInputProps('oldPassword', {
+              initialValue: '',
+              onlyFirst: true,
+              validates: [
+                {
+                  rules: [{
+                    required: true,
+                  }],
+                  trigger: ['onChange', 'onBlur'],
+                },
+              ],
+            })}
+          />
+        </FormItem>
+        <FormItem>
+          <UnderlineInput
+            placeholder="新密码"
+            type="password"
+            {...this.props.form.getInputProps('newPassword', {
               initialValue: '',
               onlyFirst: true,
               validates: [
@@ -81,8 +65,8 @@ class SignupForm extends Component {
                     required: true,
                   }, {
                     validator: (value, rule, formdata, callback) => {
-                      const { password } = formdata;
-                      if (value !== password) {
+                      const { newPassword } = formdata;
+                      if (value !== newPassword) {
                         callback(new Error('两次输入的密码必须一致'));
                       } else {
                         callback();
@@ -110,14 +94,13 @@ class SignupForm extends Component {
             });
           }}
         >
-        注册
+        修改密码
         </Button>
-        <Link className="vp-link" to="/login">登录</Link>
       </form>
     );
   }
 }
 
-SignupForm.propTypes = propTypes;
+PasswordForm.propTypes = propTypes;
 
-export default createForm(SignupForm);
+export default createForm(PasswordForm);

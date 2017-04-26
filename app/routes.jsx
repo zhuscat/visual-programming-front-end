@@ -3,8 +3,10 @@ import { Router, Route, IndexRoute } from 'react-router';
 import App from './containers/App';
 import Editor from './containers/Editor';
 import Login from './containers/login-form';
-import SignupForm from './components/SignupForm';
+import SignupForm from './containers/signup-form';
+import Password from './containers/password-form';
 import ProgramLibrary from './containers/program-library';
+import UserInfo from './containers/user-info';
 
 const getRoutes = (history, store) => {
   const requireAuth = (nexState, replace, callback) => {
@@ -23,7 +25,9 @@ const getRoutes = (history, store) => {
         <IndexRoute component={Editor} onEnter={requireAuth} />
         <Route path="login" component={Login} />
         <Route path="signup" component={SignupForm} />
+        <Route path="password" component={Password} onEnter={requireAuth} />
         <Route path="library" component={ProgramLibrary} onEnter={requireAuth} />
+        <Route path="user" component={UserInfo} onEnter={requireAuth} />
       </Route>
     </Router>
   );

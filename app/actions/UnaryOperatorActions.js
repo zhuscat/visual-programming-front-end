@@ -4,20 +4,21 @@ export const addUnaryOperator = ({ parentId, playload, area }) => ({
   type: 'CREATE_MODULE',
   area,
   module: {
-    id: uuid('UNARYOPERATOR'),
+    id: uuid('OPERATOR'),
     parentId,
     playload,
-    moduleType: 'UNARYOPERATOR',
-    op: 'plus',
+    moduleType: 'OPERATOR',
+    op: 'unary_plus',
+    sub: 'UNARY',
   },
 });
 
-export const changeUnaryOperator = ({ id, val, valType, op, assignValue }) => ({
+export const changeUnaryOperator = ({ id, first, firstType, op, assignValue }) => ({
   type: 'UPDATE_MODULE',
   module: {
     id,
-    val,
-    valType,
+    first,
+    firstType,
     op,
     assignValue,
   },

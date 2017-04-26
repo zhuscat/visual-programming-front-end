@@ -1,38 +1,39 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import LoginForm from '../components/LoginForm';
+import PasswordForm from '../components/password-form';
 import * as userActions from '../actions/user';
 
 const propTypes = {
-  login: PropTypes.func,
+  changePassword: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 
-class LoginContainer extends Component {
+class PasswordContainer extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit({ username, password }) {
-    this.props.login({ username, password });
+  handleSubmit({ oldPassword, newPassword }) {
+    console.log('click');
+    this.props.changePassword({ oldPassword, newPassword });
   }
 
   render() {
     return (
-      <LoginForm
+      <PasswordForm
         onSubmit={this.handleSubmit}
       />
     );
   }
 }
 
-LoginContainer.propTypes = propTypes;
+PasswordContainer.propTypes = propTypes;
 
 function mapStateToProps(state) {
   return {};
 }
 
 export default connect(mapStateToProps, {
-  login: userActions.login.request,
-})(LoginContainer);
+  changePassword: userActions.changePassword.request,
+})(PasswordContainer);

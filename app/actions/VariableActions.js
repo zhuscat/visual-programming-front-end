@@ -6,6 +6,7 @@ export const addVariable = ({ area }) => ({
   module: {
     id: uuid('VARIABLE'),
     moduleType: 'VARIABLE',
+    initType: 'immediate',
   },
 });
 

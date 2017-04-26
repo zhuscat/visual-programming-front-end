@@ -129,78 +129,82 @@ export default class ConditionModule extends Component {
       'vp-while-module__board': this.props.moduleType === 'WHILE',
     });
     return (
-      <div className="vp-condition-module">
-        <div className={titleClassName}>
-          <span>
-            {this.props.moduleType === 'WHILE' ? '循环' : '条件'}
-          </span>
-          <i
-            className="fa fa-times vp-module__close"
-            onClick={this.onDeleteButtonClick}
-          />
-        </div>
-        <div className="vp-condition-module__body">
-          <div className={conditonClassName}>
-            {this.props.condition.map(id => this.createModule(this.props.entities[id]))}
-            <AddModuleButton
-              style={{
-                color: '#dedede',
-              }}
-              onClick={this.handleAddConditionButtonClick}
+      <div>
+        <div className="vp-condition-module">
+          <div className={titleClassName}>
+            <span>
+              {this.props.moduleType === 'WHILE' ? '循环' : '条件'}
+            </span>
+            <i
+              className="fa fa-times vp-module__close"
+              onClick={this.onDeleteButtonClick}
             />
-            { this.state.conditionModalOpen ?
-              <Modal
-                onCloseButtonClick={() => { this.setState({ conditionModalOpen: false }); }}
-              >
-                <ModuleBlock
-                  module="operator"
-                  name="操作"
-                  onClick={this.conditionOperatorModuleBlockClick}
-                />
-                <ModuleBlock
-                  module="unaryOperator"
-                  name="一元操作"
-                  onClick={this.conditionUnaryOperatorModuleBlockClick}
-                />
-              </Modal> :
-              null
-            }
           </div>
-          <div className={boardClassName}>
-            {this.props.procedure.map(id => this.createModule(this.props.entities[id]))}
-            <AddModuleButton
-              style={{
-                color: '#e7e5e6',
-              }}
-              onClick={this.handleAddModuleButtonClick}
-            />
-            { this.state.modalOpen ?
-              <Modal
-                onCloseButtonClick={() => { this.setState({ modalOpen: false }); }}
-              >
-                <ModuleBlock
-                  module="operator"
-                  name="操作"
-                  onClick={this.operatorModuleBlockClick}
-                />
-                <ModuleBlock
-                  module="unaryOperator"
-                  name="一元操作"
-                  onClick={this.unaryOperatorModuleBlockClick}
-                />
-                <ModuleBlock
-                  module="while"
-                  name="循环"
-                  onClick={this.whileModuleBlockClick}
-                />
-                <ModuleBlock
-                  module="if"
-                  name="条件"
-                  onClick={this.ifModuleBlockClick}
-                />
-              </Modal> :
-              null
-            }
+          <div className="vp-condition-module__body">
+            <div className={conditonClassName}>
+              {this.createModule(this.props.entities[this.props.condition])}
+              {!this.props.entities[this.props.condition] ?
+                <AddModuleButton
+                  style={{
+                    color: '#dedede',
+                  }}
+                  onClick={this.handleAddConditionButtonClick}
+                /> : null
+              }
+              { this.state.conditionModalOpen ?
+                <Modal
+                  onCloseButtonClick={() => { this.setState({ conditionModalOpen: false }); }}
+                >
+                  <ModuleBlock
+                    module="operator"
+                    name="操作"
+                    onClick={this.conditionOperatorModuleBlockClick}
+                  />
+                  <ModuleBlock
+                    module="unaryOperator"
+                    name="一元操作"
+                    onClick={this.conditionUnaryOperatorModuleBlockClick}
+                  />
+                </Modal> :
+                null
+              }
+            </div>
+            <div className={boardClassName}>
+              {this.props.procedure.map(id => this.createModule(this.props.entities[id]))}
+              <AddModuleButton
+                style={{
+                  color: '#e7e5e6',
+                }}
+                onClick={this.handleAddModuleButtonClick}
+              />
+              { this.state.modalOpen ?
+                <Modal
+                  onCloseButtonClick={() => { this.setState({ modalOpen: false }); }}
+                >
+                  <ModuleBlock
+                    module="operator"
+                    name="操作"
+                    onClick={this.operatorModuleBlockClick}
+                  />
+                  <ModuleBlock
+                    module="unaryOperator"
+                    name="一元操作"
+                    onClick={this.unaryOperatorModuleBlockClick}
+                  />
+                  <ModuleBlock
+                    module="while"
+                    name="循环"
+                    onClick={this.whileModuleBlockClick}
+                  />
+                  <ModuleBlock
+                    module="if"
+                    name="条件"
+                    onClick={this.ifModuleBlockClick}
+                  />
+                </Modal> :
+                null
+              }
+            </div>
           </div>
         </div>
       </div>

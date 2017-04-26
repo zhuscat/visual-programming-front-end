@@ -57,16 +57,17 @@ export default class ProgramModule extends Component {
           />
         );
       case 'OPERATOR':
+        if (this.props.programModule.sub === 'UNARY') {
+          return (
+            <UnaryOperatorModule
+              {...this.props.programModule}
+              entities={this.props.entities}
+              dispatch={this.props.dispatch}
+            />
+          );
+        }
         return (
           <OperatorModule
-            {...this.props.programModule}
-            entities={this.props.entities}
-            dispatch={this.props.dispatch}
-          />
-        );
-      case 'UNARYOPERATOR':
-        return (
-          <UnaryOperatorModule
             {...this.props.programModule}
             entities={this.props.entities}
             dispatch={this.props.dispatch}
