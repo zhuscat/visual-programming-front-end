@@ -5,9 +5,6 @@ import OperatorModule from './OperatorModule';
 import VariableModule from './VariableModule';
 import OutputModule from './OutputModule';
 import Sidebar from './Sidebar';
-import AddModuleButton from './AddModuleButton';
-import Modal from './Modal';
-import ModuleBlock from './ModuleBlock';
 import VariableSection from './VariableSection';
 
 export default class App extends Component {

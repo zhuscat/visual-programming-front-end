@@ -76,11 +76,13 @@ export default class ConditionModule extends Component {
   unaryOperatorModuleBlockClick() {
     const { dispatch } = this.props;
     dispatch(addUnaryOperator({ parentId: this.props.id, playload: 'procedure' }));
+    this.setState({ modalOpen: false });
   }
 
   conditionUnaryOperatorModuleBlockClick() {
     const { dispatch } = this.props;
     dispatch(addUnaryOperator({ parentId: this.props.id, playload: 'condition' }));
+    this.setState({ modalOpen: false });
   }
 
   whileModuleBlockClick() {

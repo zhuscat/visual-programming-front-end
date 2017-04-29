@@ -22,7 +22,7 @@ const getRoutes = (history, store) => {
   return (
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Editor} onEnter={requireAuth} />
+        <IndexRoute component={Editor} />
         <Route path="login" component={Login} />
         <Route path="signup" component={SignupForm} />
         <Route path="password" component={Password} onEnter={requireAuth} />

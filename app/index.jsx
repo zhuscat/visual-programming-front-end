@@ -1,12 +1,12 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
+import 'react-validation-form/src/form.css';
 import getRoutes from './routes';
 import configureStore from './store/configureStore';
 import DevTools from './containers/devtools';
 import rootSaga from './sagas';
 import { history } from './services';
-import 'react-validation-form/src/form.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
 import '../styles/base.scss';
 

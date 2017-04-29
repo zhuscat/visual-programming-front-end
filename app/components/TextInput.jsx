@@ -8,11 +8,15 @@ const propTypes = {
   defaultValue: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  style: PropTypes.object,
+  type: PropTypes.string,
 };
 
 const defaultProps = {
   defaultValue: '',
   onChange: noop,
+  style: {},
+  type: 'text',
 };
 
 export default class TextInput extends clickOutside(Component) {
@@ -70,7 +74,8 @@ export default class TextInput extends clickOutside(Component) {
     });
     return (
       <div
-        className="vp-text-input"
+        className={this.props.type === 'text' ? 'vp-text-input' : 'vp-index-input' }
+        style={this.props.style}
         onClick={this.handleClick}
         ref={node => { this.textInput = node; }}
       >

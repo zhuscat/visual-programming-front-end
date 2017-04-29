@@ -4,19 +4,6 @@ import clickOutside from './highorder/ClickOutside';
 import noop from '../utils/noop';
 import '../../styles/choose-input.scss';
 
-/*
-options
-[
-{
-text: "数字",
-value: "Number",
-},
-{
-text: "布尔",
-value: "Bool",
-}
-]
-*/
 const propTypes = {
   value: PropTypes.string,
   defaultSelectFirst: PropTypes.bool,

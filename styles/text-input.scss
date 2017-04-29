@@ -3,6 +3,7 @@
 
 .vp-text-input {
   @extend %vp-base-input;
+  min-width: 64px;
 
   &__input-wrapper {
     overflow: hidden;
@@ -23,7 +24,14 @@
 
     &--hidden {
       @extend .vp-text-input__input-wrapper;
-      opacity: 0;
+      display: none;
     }
   }
+}
+
+.vp-index-input {
+  @extend %vp-base-input;
+  color: $primary-font-color;
+  width: 32px;
+  margin-left: 8px;
 }

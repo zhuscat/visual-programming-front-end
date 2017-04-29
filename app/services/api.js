@@ -9,7 +9,7 @@ function callApi({ endpoint, _schema, method = 'GET', data, token }) {
   const fullUrl = `${API_ROOT}${endpoint}`;
   let request;
   // let config;
-  if (method === 'GET') {
+  if (method === 'GET' || method === 'DELETE') {
     const headers = {};
     if (token) {
       headers['X-Authorization'] = `Bearer ${token}`;
@@ -126,10 +126,15 @@ export const addProgram = (newProgram, token) => callApi({
   token,
 });
 
-export const updateProgram = (updatedProgram) => callApi({
+export const updateProgram = (updatedProgram, token) => callApi({
   endpoint: '/v1/program/',
   method: 'POST',
   data: updatedProgram,
   token,
 });
 
+export const deleteProgram = (id, token) => callApi({
+  endpoint: `/v1/program/del/${id}/`,
+  method: 'DELETE',
+  token,
+});

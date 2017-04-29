@@ -55,6 +55,7 @@ const program = (state = initialState, action) => {
         isLoading: false,
         id: action.id,
         name: action.name,
+        desc: action.desc,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
       };

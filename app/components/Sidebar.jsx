@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
 import UnderlineInput from './UnderlineInput';
 import Button from './Button';
 import denormalize from '../utils/denormalize';
@@ -16,6 +15,7 @@ const propTypes = {
   updateProgram: PropTypes.func,
   name: PropTypes.string,
   desc: PropTypes.string,
+  onExecButtonClick: PropTypes.func,
 };
 
 export default class Sidebar extends Component {
@@ -28,18 +28,19 @@ export default class Sidebar extends Component {
   }
 
   onUpdateButtonClick() {
-    const { name, entities, procedureArea, variableArea } = this.props;
+    const { name, desc, entities, procedureArea, variableArea } = this.props;
     const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
     this.props.updateProgram({
       program: {
         name,
+        desc,
         structInfo,
       },
     });
   }
 
   onSaveButtonClick() {
-    const { name, entities, procedureArea, variableArea } = this.props;
+    const { name, desc, entities, procedureArea, variableArea } = this.props;
     /**
      * 当调用两次 denormalize 的时候出现错误
      * 其原因应该是这个函数是有副作用的，改变的原来的对象
@@ -51,14 +52,16 @@ export default class Sidebar extends Component {
     this.props.addProgram({
       program: {
         name,
+        desc,
         structInfo,
       },
     });
   }
 
   onExecButtonClick() {
+    // this.props.onExecButtonClick(this.props.id);
     if (window) {
-      window.open(`/v1/program/gen/${this.props.id}`);
+      window.open(`http://localhost:8080/v1/program/gen/${this.props.id}`);
     }
   }
 

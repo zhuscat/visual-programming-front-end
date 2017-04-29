@@ -12,6 +12,7 @@ const propTypes = {
   fetchAllProgram: PropTypes.func,
   fetchProgram: PropTypes.func,
   createProgram: PropTypes.func,
+  deleteProgram: PropTypes.func,
 };
 
 class ProgramLibraryContainer extends Component {
@@ -43,6 +44,7 @@ class ProgramLibraryContainer extends Component {
           items={this.props.items}
           onCardClick={this.handleCardClick}
           onCreateClick={this.handleCreateClick}
+          onDeleteClick={this.props.deleteProgram}
         />
       </div>
     );
@@ -64,6 +66,7 @@ export default connect(mapStateToProps, {
   fetchAllProgram: programActions.fetchAllProgram.request,
   fetchProgram: programActions.fetchProgram.request,
   createProgram: programActions.createLocal,
+  deleteProgram: programActions.deleteProgram.request,
 })(ProgramLibraryContainer);
 
 

@@ -1,19 +1,23 @@
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
 import ChooseInput from './ChooseInput';
+import TextInput from './TextInput';
 import IconButton from './IconButton';
-import noop from '../utils/noop';
 import '../../styles/operator-module.scss';
 import { changeOperator, deleteOperator } from '../actions/OperatorActions';
+
+// TODO: 修改 OperatorModule 使得其能接受数组模式
 
 const propTypes = {
   id: PropTypes.string,
   first: PropTypes.string,
   firstType: PropTypes.string,
+  firstIndex: PropTypes.string,
   second: PropTypes.string,
   secondType: PropTypes.string,
+  secondIndex: PropTypes.string,
   op: PropTypes.string,
   assignValue: PropTypes.string,
+  assignIndex: PropTypes.string,
   entities: PropTypes.object,
   parentId: PropTypes.string,
   dispatch: PropTypes.func,
@@ -79,6 +83,9 @@ export default class OperatorModule extends Component {
     this.handleAssignInputClick = this.handleAssignInputClick.bind(this);
     this.handleFirstWithInputChange = this.handleFirstWithInputChange.bind(this);
     this.handleSecondWithInputChange = this.handleSecondWithInputChange.bind(this);
+    this.handleFirstIndexChange = this.handleFirstIndexChange.bind(this);
+    this.handleSecondIndexChange = this.handleSecondIndexChange.bind(this);
+    this.handleAssignIndexChange = this.handleAssignIndexChange.bind(this);
   }
 
   onDeleteButtonClick() {
@@ -120,10 +127,13 @@ export default class OperatorModule extends Component {
       id: this.props.id,
       first: value,
       firstType: 'VAR',
+      firstIndex: this.props.firstIndex,
       second: this.props.second,
       secondType: this.props.secondType,
+      secondIndex: this.props.secondIndex,
       op: this.props.op,
       assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -133,10 +143,13 @@ export default class OperatorModule extends Component {
       id: this.props.id,
       first: this.props.first,
       firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
       second: value,
       secondType: 'VAR',
+      secondIndex: this.props.secondIndex,
       op: this.props.op,
       assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -146,10 +159,13 @@ export default class OperatorModule extends Component {
       id: this.props.id,
       first: this.props.first,
       firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
       second: this.props.second,
       secondType: this.props.secondType,
+      secondIndex: this.props.secondIndex,
       op: this.props.op,
       assignValue: value,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -159,10 +175,13 @@ export default class OperatorModule extends Component {
       id: this.props.id,
       first: value,
       firstType: 'immediate',
+      firstIndex: this.props.firstIndex,
       second: this.props.second,
       secondType: this.props.secondType,
+      secondIndex: this.props.secondIndex,
       op: this.props.op,
       assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -172,10 +191,13 @@ export default class OperatorModule extends Component {
       id: this.props.id,
       first: this.props.first,
       firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
       second: value,
       secondType: 'immediate',
+      secondIndex: this.props.secondIndex,
       op: this.props.op,
       assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -185,10 +207,13 @@ export default class OperatorModule extends Component {
       id: this.props.id,
       first: this.props.first,
       firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
       second: this.props.second,
       secondType: this.props.secondType,
+      secondIndex: this.props.secondIndex,
       op: this.getNextOpratorValue(),
       assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -213,6 +238,56 @@ export default class OperatorModule extends Component {
     return '';
   }
 
+  handleFirstIndexChange(value) {
+    // 可能没有取索引，因为不一定是一个数组操作数
+    const { dispatch } = this.props;
+    dispatch(changeOperator({
+      id: this.props.id,
+      first: this.props.first,
+      firstType: this.props.firstType,
+      firstIndex: value,
+      second: this.props.second,
+      secondType: this.props.secondType,
+      secondIndex: this.props.secondIndex,
+      op: this.props.op,
+      assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
+    }));
+  }
+
+  handleSecondIndexChange(value) {
+    // 可能没有取索引，因为不一定是一个数组操作数
+    const { dispatch } = this.props;
+    dispatch(changeOperator({
+      id: this.props.id,
+      first: this.props.first,
+      firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
+      second: this.props.second,
+      secondType: this.props.secondType,
+      secondIndex: value,
+      op: this.props.op,
+      assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
+    }));
+  }
+
+  handleAssignIndexChange(value) {
+    const { dispatch } = this.props;
+    dispatch(changeOperator({
+      id: this.props.id,
+      first: this.props.first,
+      firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
+      second: this.props.second,
+      secondType: this.props.secondType,
+      secondIndex: this.props.secondIndex,
+      op: this.props.op,
+      assignValue: this.props.assignValue,
+      assignIndex: value,
+    }));
+  }
+
   render() {
     const firstInputValue = this.props.firstType === 'immediate' ? this.props.first : '';
     const secondInputValue = this.props.secondType === 'immediate' ? this.props.second : '';
@@ -231,6 +306,12 @@ export default class OperatorModule extends Component {
             onOptionSelect={this.handleAssignInputClick}
             options={this.getAssignOptions()}
           />
+          {this.props.entities[this.props.assignValue] && this.props.entities[this.props.assignValue].dtype === 'list' ?
+            <TextInput
+              type="index"
+              value={this.props.assignIndex}
+              onChange={this.handleAssignIndexChange}
+            /> : null}
           <i
             className="fa fa-times vp-module__close"
             onClick={this.onDeleteButtonClick}
@@ -247,6 +328,12 @@ export default class OperatorModule extends Component {
               showInputValue={this.props.firstType === 'immediate'}
               withInput
             />
+            {this.props.entities[this.props.first] && this.props.entities[this.props.first].dtype === 'list' ?
+              <TextInput
+                type="index"
+                value={this.props.firstIndex}
+                onChange={this.handleFirstIndexChange}
+              /> : null}
           </div>
           <div className="vp-operator-module__item">
             <IconButton
@@ -267,6 +354,12 @@ export default class OperatorModule extends Component {
               showInputValue={this.props.secondType === 'immediate'}
               withInput
             />
+            {this.props.entities[this.props.second] && this.props.entities[this.props.second].dtype === 'list' ?
+              <TextInput
+                type="index"
+                value={this.props.secondIndex}
+                onChange={this.handleSecondIndexChange}
+              /> : null}
           </div>
         </div>
       </div>

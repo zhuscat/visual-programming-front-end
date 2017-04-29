@@ -5,6 +5,7 @@
 
   @extend %vp-base-input;
   color: $primary-font-color;
+  min-width: 64px;
 
   &__items {
     z-index: 999;
@@ -21,7 +22,7 @@
       @extend .vp-choose-input__items;
       width: 0;
       height: 0;
-      opacity: 0;
+      display: none;
     }
   }
 

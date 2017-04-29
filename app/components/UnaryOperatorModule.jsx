@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
 import ChooseInput from './ChooseInput';
+import TextInput from './TextInput';
 import IconButton from './IconButton';
-import noop from '../utils/noop';
 import '../../styles/operator-module.scss';
 import { changeUnaryOperator, deleteUnaryOperator } from '../actions/UnaryOperatorActions';
 
@@ -10,8 +9,10 @@ const propTypes = {
   id: PropTypes.string,
   first: PropTypes.string,
   firstType: PropTypes.string,
+  firstIndex: PropTypes.string,
   op: PropTypes.string,
   assignValue: PropTypes.string,
+  assignIndex: PropTypes.string,
   entities: PropTypes.object,
   parentId: PropTypes.string,
   dispatch: PropTypes.func,
@@ -42,6 +43,8 @@ export default class UnaryOperatorModule extends Component {
     this.chooseOperatorButtonClick = this.chooseOperatorButtonClick.bind(this);
     this.handleAssignInputClick = this.handleAssignInputClick.bind(this);
     this.handleFirstWithInputChange = this.handleFirstWithInputChange.bind(this);
+    this.handleFirstIndexChange = this.handleFirstIndexChange.bind(this);
+    this.handleAssignIndexChange = this.handleAssignIndexChange.bind(this);
   }
 
   onDeleteButtonClick() {
@@ -81,10 +84,12 @@ export default class UnaryOperatorModule extends Component {
     const { dispatch } = this.props;
     dispatch(changeUnaryOperator({
       id: this.props.id,
-      fisrt: value,
+      first: value,
       firstType: 'VAR',
+      firstIndex: this.props.firstIndex,
       op: this.props.op,
       assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -94,8 +99,10 @@ export default class UnaryOperatorModule extends Component {
       id: this.props.id,
       first: this.props.first,
       firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
       op: this.props.op,
       assignValue: value,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -105,8 +112,10 @@ export default class UnaryOperatorModule extends Component {
       id: this.props.id,
       first: value,
       firstType: 'immediate',
+      firstIndex: this.props.firstIndex,
       op: this.props.op,
       assignValue: this.props.assignValue,
+      assignIndex: this.propTypes.assignIndex,
     }));
   }
 
@@ -116,8 +125,10 @@ export default class UnaryOperatorModule extends Component {
       id: this.props.id,
       first: this.props.first,
       firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
       op: this.getNextOpratorValue(),
       assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
     }));
   }
 
@@ -142,6 +153,33 @@ export default class UnaryOperatorModule extends Component {
     return '';
   }
 
+  handleFirstIndexChange(value) {
+    // 可能没有取索引，因为不一定是一个数组操作数
+    const { dispatch } = this.props;
+    dispatch(changeUnaryOperator({
+      id: this.props.id,
+      first: this.props.first,
+      firstType: this.props.firstType,
+      firstIndex: value,
+      op: this.props.op,
+      assignValue: this.props.assignValue,
+      assignIndex: this.props.assignIndex,
+    }));
+  }
+
+  handleAssignIndexChange(value) {
+    const { dispatch } = this.props;
+    dispatch(changeUnaryOperator({
+      id: this.props.id,
+      first: this.props.first,
+      firstType: this.props.firstType,
+      firstIndex: this.props.firstIndex,
+      op: this.props.op,
+      assignValue: this.props.assignValue,
+      assignIndex: value,
+    }));
+  }
+
   render() {
     const firstInputValue = this.props.firstType === 'immediate' ? this.props.first : '';
     return (
@@ -152,13 +190,19 @@ export default class UnaryOperatorModule extends Component {
               marginRight: '16px',
             }}
           >
-            一元操作
+            一元
           </span>
           <ChooseInput
             value={this.props.assignValue}
             onOptionSelect={this.handleAssignInputClick}
             options={this.getAssignOptions()}
           />
+          {this.props.entities[this.props.assignValue] && this.props.entities[this.props.assignValue].dtype === 'list' ?
+            <TextInput
+              type="index"
+              value={this.props.assignIndex}
+              onChange={this.handleAssignIndexChange}
+            /> : null}
           <i
             className="fa fa-times vp-module__close"
             onClick={this.onDeleteButtonClick}
@@ -184,6 +228,12 @@ export default class UnaryOperatorModule extends Component {
               showInputValue={this.props.firstType === 'immediate'}
               withInput
             />
+            {this.props.entities[this.props.first] && this.props.entities[this.props.first].dtype === 'list' ?
+              <TextInput
+                type="index"
+                value={this.props.firstIndex}
+                onChange={this.handleFirstIndexChange}
+              /> : null}
           </div>
         </div>
       </div>

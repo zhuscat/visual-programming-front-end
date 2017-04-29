@@ -53,6 +53,16 @@ export function* runUpdateProgram({ program }) {
   }
 }
 
+export function* runDeleteProgram({ id }) {
+  const token = yield select(state => state.user.token);
+  const { response, error } = yield call(api.deleteProgram, id, token);
+  if (response) {
+    yield put(programActions.deleteProgram.success({ id }, response));
+  } else {
+    yield put(programActions.deleteProgram.failure({ id }, error));
+  }
+}
+
 export function* fetchProgram() {
   yield* takeEvery(programActions.FETCH_PROGRAM.REQUEST, runFetchProgram);
 }
@@ -70,9 +80,14 @@ export function* updateProgram() {
   yield* takeEvery(programActions.UPDATE_PROGRAM.REQUEST, runUpdateProgram);
 }
 
+export function* deleteProgram() {
+  yield* takeEvery(programActions.DELETE_PROGRAM.REQUEST, runDeleteProgram);
+}
+
 export default function* program() {
   yield fork(fetchProgram);
   yield fork(fetchAllPrograms);
   yield fork(addProgram);
   yield fork(updateProgram);
+  yield fork(deleteProgram);
 }

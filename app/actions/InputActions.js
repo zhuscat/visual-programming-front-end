@@ -6,6 +6,7 @@ export const addInput = ({ area }) => ({
   module: {
     id: uuid('INPUT'),
     moduleType: 'INPUT',
+    dtype: 'number',
   },
 });
 
