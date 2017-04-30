@@ -70,6 +70,7 @@ export default class ProgramLibrary extends Component {
           {this.props.items.map(item => {
             return (
               <ProgramCard
+                key={item.programId}
                 id={item.programId}
                 title={item.name}
                 description={item.desc}

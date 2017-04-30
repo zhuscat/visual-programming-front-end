@@ -48,7 +48,6 @@ export default class ChooseInput extends clickOutside(Component) {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('next props', nextProps.value);
     if ('value' in nextProps) {
       this.setState({ value: nextProps.value });
     }
@@ -65,7 +64,6 @@ export default class ChooseInput extends clickOutside(Component) {
   }
 
   close() {
-    console.log('close');
     this.setState({ open: false });
     this.unbindClickOutside();
   }
@@ -77,14 +75,6 @@ export default class ChooseInput extends clickOutside(Component) {
   handleInputChange(event) {
     event.stopPropagation();
     this.props.handleWithInputValueChange(event.target.value);
-  }
-
-  open() {
-    this.setState({ open: true });
-  }
-
-  close() {
-    this.setState({ open: false });
   }
 
   getCurrentText() {

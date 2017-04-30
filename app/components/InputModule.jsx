@@ -10,6 +10,7 @@ const propTypes = {
   name: PropTypes.string,
   dtype: PropTypes.string,
   desc: PropTypes.string,
+  undeletable: PropTypes.bool,
   types: PropTypes.array,
   dispatch: PropTypes.func,
 };
@@ -19,6 +20,7 @@ const defaultProps = {
   dtype: '',
   desc: '',
   types: [],
+  undeletable: false,
   onChange: noop,
 };
 
@@ -67,16 +69,16 @@ export default class InputModule extends Component {
   }
 
   render() {
-    console.log('re render input module');
-    console.log(this.props.name);
     return (
       <div className="vp-input-module">
         <div className="vp-input-module__title">
           <span>输入</span>
-          <i
-            className="fa fa-times vp-module__close"
-            onClick={this.onCloseButtonClick}
-          />
+          {!this.props.undeletable ?
+            <i
+              className="fa fa-times vp-module__close"
+              onClick={this.onCloseButtonClick}
+            /> : null
+          }
         </div>
         <div className="vp-input-module__body">
           <div className="vp-input-module__item">

@@ -12,6 +12,7 @@ const propTypes = {
   name: PropTypes.string,
   dtype: PropTypes.string,
   desc: PropTypes.string,
+  undeletable: PropTypes.bool,
   types: PropTypes.array,
   dispatch: PropTypes.func,
 };
@@ -73,10 +74,12 @@ export default class OutputModule extends Component {
       <div className="vp-output-module">
         <div className="vp-output-module__title">
           <span>输出</span>
-          <i
-            className="fa fa-times vp-module__close"
-            onClick={this.onCloseButtonClick}
-          />
+          {!this.props.undeletable ?
+            <i
+              className="fa fa-times vp-module__close"
+              onClick={this.onCloseButtonClick}
+            /> : null
+          }
         </div>
         <div className="vp-output-module__body">
           <div className="vp-output-module__item">

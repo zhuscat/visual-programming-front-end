@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1493454184854'); /* IE9*/
-  src: url('iconfont.eot?t=1493454184854#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1493454184854') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1493454184854') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1493454184854#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1493517870614'); /* IE9*/
+  src: url('iconfont.eot?t=1493517870614#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1493517870614') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1493517870614') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1493517870614#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -30,6 +30,8 @@
 .icon-denglu:before { content: "\e60a"; }
 
 .icon-loading:before { content: "\eee3"; }
+
+.icon-all:before { content: "\e68d"; }
 
 .icon-logout:before { content: "\e61f"; }
 

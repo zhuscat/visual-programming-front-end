@@ -9,11 +9,12 @@ export function* runFetchProgram({ id }) {
   const { response, error } = yield call(api.fetchProgram, id, token);
   if (response) {
     // 对 response 进行操作
-    const { name, program } = normalize(response);
+    const { name, desc, program } = normalize(response);
     const { variableArea, procedureArea, entities } = program;
     yield put(programActions.fetchProgram.success({
       id,
       name,
+      desc,
       variableArea,
       procedureArea,
       entities,

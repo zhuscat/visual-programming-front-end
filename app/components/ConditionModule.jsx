@@ -8,26 +8,7 @@ import { addWhile, deleteWhile } from '../actions/WhileActions';
 import { addOperator } from '../actions/OperatorActions';
 import { addUnaryOperator } from '../actions/UnaryOperatorActions';
 import { addIf } from '../actions/IfActions';
-import VariableModule from './VariableModule';
-import InputModule from './InputModule';
-import OutputModule from './OutputModule';
-import OperatorModule from './OperatorModule';
 import ProgramModule from './Module';
-
-const dataTypes = [
-  {
-    text: '数字',
-    value: 'number',
-  },
-  {
-    text: '布尔',
-    value: 'bool',
-  },
-  {
-    text: '列表',
-    value: 'list',
-  },
-];
 
 const propTypes = {
   id: PropTypes.string,

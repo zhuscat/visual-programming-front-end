@@ -1,4 +1,5 @@
 import * as actions from '../actions/program';
+import * as problemActions from '../actions/problem';
 
 const initialState = {
   id: '',
@@ -116,6 +117,28 @@ const program = (state = initialState, action) => {
       return {
         ...state,
         desc: action.desc,
+      };
+    case problemActions.FETCH_PROBLEM.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case problemActions.FETCH_PROBLEM.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        id: action.id,
+        name: action.name,
+        desc: action.desc,
+        variableArea: action.variableArea,
+        procedureArea: action.procedureArea,
+      };
+    case problemActions.FETCH_PROBLEM.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        variableArea: [],
+        procedureArea: [],
       };
     default:
       return state;

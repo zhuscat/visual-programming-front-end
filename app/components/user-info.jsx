@@ -3,8 +3,8 @@ import Button from './Button';
 import '../../styles/user-info.scss';
 
 const propTypes = {
-  username: PropTypes.username,
-  email: PropTypes.email,
+  username: PropTypes.string,
+  email: PropTypes.string,
   onChangePasswordClick: PropTypes.func,
   onSignoutClick: PropTypes.func,
 };
@@ -25,7 +25,7 @@ export default class UserInfo extends Component {
               修改密码
             </Button>
           </div>
-          <div lassName="user-info-card__button-wrapper">
+          <div className="user-info-card__button-wrapper">
             <Button
               type="hollow"
               radius

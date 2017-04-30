@@ -34,7 +34,7 @@ function procedureNodeTransform(value, target, nameMap) {
 }
 
 function responseTransform(response) {
-  const { name, structInfo } = response;
+  const { name, desc, structInfo } = response;
   const json = JSON.parse(structInfo);
   const nameMap = {};
   const target = {
@@ -61,6 +61,7 @@ function responseTransform(response) {
   });
   return {
     name,
+    desc,
     program: target,
   };
 }

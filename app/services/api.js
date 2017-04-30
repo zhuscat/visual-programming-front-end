@@ -138,3 +138,28 @@ export const deleteProgram = (id, token) => callApi({
   method: 'DELETE',
   token,
 });
+
+// 客户端的问题执行
+
+export const fetchAllProblems = (token) => callApi({
+  endpoint: `/v1/problem/all/`,
+  token,
+});
+
+export const fetchProblem = (id, token) => callApi({
+  endpoint: `/v1/problem/${id}/`,
+  token,
+});
+
+export const saveProblem = (savedProgram, token) => callApi({
+  endpoint: `/v1/problem/`,
+  method: 'POST',
+  data: savedProgram,
+  token,
+});
+
+// 这里的问题
+export const execProblem = (id, token) => callApi({
+  endpoint: `/v1/problem/exec`,
+  token,
+});

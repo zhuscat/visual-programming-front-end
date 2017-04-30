@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Modal from './Modal';
 import ModuleBlock from './ModuleBlock';
-import InputModule from './InputModule';
-import OutputModule from './OutputModule';
-import VariableModule from './VariableModule';
 import AddModuleButton from './AddModuleButton';
 import { addInput } from '../actions/InputActions';
 import { addVariable } from '../actions/VariableActions';
@@ -19,21 +16,6 @@ const propTypes = {
 const defaultProps = {
   data: [],
 };
-
-const dataTypes = [
-  {
-    text: '数字',
-    value: 'number',
-  },
-  {
-    text: '布尔',
-    value: 'bool',
-  },
-  {
-    text: '列表',
-    value: 'list',
-  },
-];
 
 export default class VariableSection extends Component {
   constructor(props) {

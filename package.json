@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --port 8006",
+    "start": "webpack-dev-server --inline --port 8006 --config webpack.config.dev.js",
+    "build": "NODE_ENV=production npm run clean && webpack --config webpack.config.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

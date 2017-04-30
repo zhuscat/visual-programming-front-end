@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
 import noop from '../utils/noop';
 import '../../styles/icon-button.scss';
 

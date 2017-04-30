@@ -42,6 +42,12 @@ export default class Header extends Component {
         />
         <NavItem
           type="link"
+          link="/square"
+          iconName="all"
+          title="广场"
+        />
+        <NavItem
+          type="link"
           link="/user"
           iconName="geren"
           title="信息"
@@ -57,7 +63,9 @@ export default class Header extends Component {
   render() {
     return (
       <header className="vp-header clearfix">
-        <h1 className="vp-header-brand"><i className="iconfont icon-code vp-header-brand__icon" /><span>可视化编程</span></h1>
+        <h1 className="vp-header-brand"><i className="iconfont icon-code vp-header-brand__icon" />
+          <span>可视化编程</span>
+        </h1>
         {this.props.user.token ?
           this.renderLogin() :
           this.renderNotLogin()

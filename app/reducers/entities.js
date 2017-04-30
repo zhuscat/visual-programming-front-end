@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import * as actions from '../actions/program';
+import * as problemActions from '../actions/problem';
 
 const modules = (state = {}, action) => {
   switch (action.type) {
@@ -76,6 +77,10 @@ const modules = (state = {}, action) => {
       }
     case actions.FETCH_PROGRAM.SUCCESS:
       // 替换掉 entities
+      return action.entities;
+    // problem 的数据结构与 program 是一样的，除了多了两个字段，rate 跟 state
+    // rate 为通过率 state 为题目的状态
+    case problemActions.FETCH_PROBLEM.SUCCESS:
       return action.entities;
     case actions.CREATE_PROGRAM_LOCAL:
       return {};

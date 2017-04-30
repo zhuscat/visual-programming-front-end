@@ -6,6 +6,7 @@ import Login from './containers/login-form';
 import SignupForm from './containers/signup-form';
 import Password from './containers/password-form';
 import ProgramLibrary from './containers/program-library';
+import ProblemLibrary from './containers/problem-library';
 import UserInfo from './containers/user-info';
 
 const getRoutes = (history, store) => {
@@ -28,6 +29,7 @@ const getRoutes = (history, store) => {
         <Route path="password" component={Password} onEnter={requireAuth} />
         <Route path="library" component={ProgramLibrary} onEnter={requireAuth} />
         <Route path="user" component={UserInfo} onEnter={requireAuth} />
+        <Route path="square" component={ProblemLibrary} onEnter={requireAuth} />
       </Route>
     </Router>
   );

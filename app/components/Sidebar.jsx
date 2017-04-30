@@ -47,15 +47,15 @@ export default class Sidebar extends Component {
      * TODO: 将其改为无副作用的
      * DONE: 改完了
      */
-    // console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
-    const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
-    this.props.addProgram({
-      program: {
-        name,
-        desc,
-        structInfo,
-      },
-    });
+    console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
+    // const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
+    // this.props.addProgram({
+    //   program: {
+    //     name,
+    //     desc,
+    //     structInfo,
+    //   },
+    // });
   }
 
   onExecButtonClick() {

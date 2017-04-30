@@ -6,13 +6,11 @@ const propTypes = {
   isShowing: PropTypes.bool,
 };
 
-const LoadingOverlay = ({ isShowing }) => {
-  return (
-    <div className={`${isShowing ? 'loading-overlay' : ''}`}>
-      {isShowing ? <Spin /> : null}
-    </div>
-  );
-};
+const LoadingOverlay = ({ isShowing }) => (
+  <div className={`${isShowing ? 'loading-overlay' : ''}`}>
+    {isShowing ? <Spin /> : null}
+  </div>
+);
 
 LoadingOverlay.propTypes = propTypes;
 
