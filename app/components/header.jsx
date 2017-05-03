@@ -32,19 +32,13 @@ export default class Header extends Component {
           type="link"
           link="/"
           iconName="dianping"
-          title="编程"
+          title="编辑"
         />
         <NavItem
           type="link"
           link="/library"
           iconName="jihe"
           title="集合"
-        />
-        <NavItem
-          type="link"
-          link="/square"
-          iconName="all"
-          title="广场"
         />
         <NavItem
           type="link"

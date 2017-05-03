@@ -4,7 +4,7 @@ import * as problemActions from '../actions/problem';
 const initialState = {
   id: '',
   name: '',
-  desc: '',
+  description: '',
   isLoading: false,
   variableArea: [],
   procedureArea: [],
@@ -56,7 +56,7 @@ const program = (state = initialState, action) => {
         isLoading: false,
         id: action.id,
         name: action.name,
-        desc: action.desc,
+        description: action.description,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
       };
@@ -72,7 +72,7 @@ const program = (state = initialState, action) => {
         ...state,
         id: '',
         name: '',
-        desc: '',
+        description: '',
         isLoading: false,
         variableArea: [],
         procedureArea: [],
@@ -86,7 +86,7 @@ const program = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        id: action.programId,
+        id: action.response.programId,
       };
     case actions.ADD_PROGRAM.FAILURE:
       return {
@@ -116,7 +116,7 @@ const program = (state = initialState, action) => {
     case actions.PROGRAM_DESC_CHANGE:
       return {
         ...state,
-        desc: action.desc,
+        description: action.value,
       };
     case problemActions.FETCH_PROBLEM.REQUEST:
       return {
@@ -129,7 +129,7 @@ const program = (state = initialState, action) => {
         isLoading: false,
         id: action.id,
         name: action.name,
-        desc: action.desc,
+        description: action.description,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
       };

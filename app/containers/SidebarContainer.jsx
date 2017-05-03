@@ -35,13 +35,13 @@ class SidebarContainer extends Component {
 
 function mapStateToProps(state) {
   const { entities, program, user } = state;
-  const { id, variableArea, procedureArea, name, desc } = program;
+  const { id, variableArea, procedureArea, name, description } = program;
   const { token } = user;
   return {
     entities,
     id,
     name,
-    desc,
+    description,
     variableArea,
     procedureArea,
     token,
@@ -52,4 +52,5 @@ export default connect(mapStateToProps, {
   onProgramTitleChange: programActions.titleChange,
   onProgramDescChange: programActions.descChange,
   addProgram: programActions.addProgram.request,
+  updateProgram: programActions.updateProgram.request,
 })(SidebarContainer);

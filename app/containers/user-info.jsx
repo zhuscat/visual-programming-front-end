@@ -18,7 +18,7 @@ class UserInfoContainer extends Component {
   }
 
   handleChangePasswordClick() {
-    history.push('/password');
+    history.push('/user/password');
   }
 
   handleSignoutClick() {

@@ -23,12 +23,14 @@ const getRoutes = (history, store) => {
   return (
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Editor} />
+        <IndexRoute component={Editor} onEnter={requireAuth} />
         <Route path="login" component={Login} />
         <Route path="signup" component={SignupForm} />
-        <Route path="password" component={Password} onEnter={requireAuth} />
         <Route path="library" component={ProgramLibrary} onEnter={requireAuth} />
-        <Route path="user" component={UserInfo} onEnter={requireAuth} />
+        <Route path="user">
+          <IndexRoute component={UserInfo} onEnter={requireAuth} />
+          <Route path="password" component={Password} onEnter={requireAuth} />
+        </Route>
         <Route path="square" component={ProblemLibrary} onEnter={requireAuth} />
       </Route>
     </Router>

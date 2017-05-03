@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import PasswordForm from '../components/password-form';
+import LoadingOverlay from '../components/loading-overlay';
 import * as userActions from '../actions/user';
 
 const propTypes = {
@@ -15,15 +16,17 @@ class PasswordContainer extends Component {
   }
 
   handleSubmit({ oldPassword, newPassword }) {
-    console.log('click');
     this.props.changePassword({ oldPassword, newPassword });
   }
 
   render() {
     return (
-      <PasswordForm
-        onSubmit={this.handleSubmit}
-      />
+      <div>
+        <LoadingOverlay isShowing={this.props.isLoading} />
+        <PasswordForm
+          onSubmit={this.handleSubmit}
+        />
+      </div>
     );
   }
 }
@@ -31,7 +34,11 @@ class PasswordContainer extends Component {
 PasswordContainer.propTypes = propTypes;
 
 function mapStateToProps(state) {
-  return {};
+  const { user } = state;
+  const { isLoading } = user;
+  return {
+    isLoading,
+  };
 }
 
 export default connect(mapStateToProps, {

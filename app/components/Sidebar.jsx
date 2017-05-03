@@ -14,7 +14,7 @@ const propTypes = {
   addProgram: PropTypes.func,
   updateProgram: PropTypes.func,
   name: PropTypes.string,
-  desc: PropTypes.string,
+  description: PropTypes.string,
   onExecButtonClick: PropTypes.func,
 };
 
@@ -23,39 +23,41 @@ export default class Sidebar extends Component {
     super(props);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.onExecButtonClick = this.onExecButtonClick.bind(this);
+    this.onUpdateButtonClick = this.onUpdateButtonClick.bind(this);
     this.handleProgramTitleChange = this.handleProgramTitleChange.bind(this);
     this.handleProgramDescChange = this.handleProgramDescChange.bind(this);
   }
 
   onUpdateButtonClick() {
-    const { name, desc, entities, procedureArea, variableArea } = this.props;
+    const { id, name, description, entities, procedureArea, variableArea } = this.props;
     const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
     this.props.updateProgram({
       program: {
+        programId: id,
         name,
-        desc,
+        description,
         structInfo,
       },
     });
   }
 
   onSaveButtonClick() {
-    const { name, desc, entities, procedureArea, variableArea } = this.props;
+    const { name, description, entities, procedureArea, variableArea } = this.props;
     /**
      * 当调用两次 denormalize 的时候出现错误
      * 其原因应该是这个函数是有副作用的，改变的原来的对象
      * TODO: 将其改为无副作用的
      * DONE: 改完了
      */
-    console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
-    // const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
-    // this.props.addProgram({
-    //   program: {
-    //     name,
-    //     desc,
-    //     structInfo,
-    //   },
-    // });
+    // console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
+    const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
+    this.props.addProgram({
+      program: {
+        name,
+        description,
+        structInfo,
+      },
+    });
   }
 
   onExecButtonClick() {
@@ -87,8 +89,8 @@ export default class Sidebar extends Component {
         />
         <UnderlineInput
           placeholder="编辑描述"
-          value={this.props.desc}
-          onChange={this.props.onProgramDescChange}
+          value={this.props.description}
+          onChange={this.handleProgramDescChange}
         />
         <Button
           type="hollow"

@@ -6,7 +6,7 @@ var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 module.exports = {
-    devtool: 'eval-source-map',
+    devtool: 'cheap-source-map',
     // 默认寻找文件夹下面的index.js文件
     entry: {
         app: path.resolve(APP_PATH, 'index.jsx'),
@@ -14,12 +14,6 @@ module.exports = {
     output: {
         path: BUILD_PATH,
         filename: '[name].[hash].js'
-    },
-    devServer: {
-        historyApiFallback: true,
-        hot: false,
-        inline: true,
-        progress: true,
     },
     resolve: {
       extensions: ['', '.js', '.jsx']
@@ -43,7 +37,6 @@ module.exports = {
                   path.resolve(ROOT_PATH, 'styles'),
                   path.resolve(ROOT_PATH, 'node_modules/font-awesome'),
                   path.resolve(ROOT_PATH, 'node_modules/react-validation-form'),
-                  path.resolve(ROOT_PATH, 'node_modules/react-spinkit'),
                   path.resolve(ROOT_PATH, 'node_modules/react-s-alert'),
                 ]
             },
@@ -56,6 +49,13 @@ module.exports = {
     plugins: [
         new HtmlwebpackPlugin({
             title: '可视化编程'
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false },
+            comments: false,
+            drop_console: true,
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),

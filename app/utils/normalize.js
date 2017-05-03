@@ -22,7 +22,7 @@ function procedureNodeTransform(value, target, nameMap) {
   }
   const procedure = [];
   if (value.condition) {
-    value.condition = value.condition.id;
+    value.condition = value.condition.id || '';
   }
   if (value.procedure) {
     value.procedure.forEach(v => {
@@ -34,7 +34,7 @@ function procedureNodeTransform(value, target, nameMap) {
 }
 
 function responseTransform(response) {
-  const { name, desc, structInfo } = response;
+  const { name, description, structInfo } = response;
   const json = JSON.parse(structInfo);
   const nameMap = {};
   const target = {
@@ -61,7 +61,7 @@ function responseTransform(response) {
   });
   return {
     name,
-    desc,
+    description,
     program: target,
   };
 }

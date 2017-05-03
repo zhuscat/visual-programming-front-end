@@ -2,7 +2,7 @@ import { schema, normalizr } from 'normalizr';
 import 'isomorphic-fetch';
 import reqwest from 'reqwest';
 
-const API_ROOT = 'http://localhost:8080';
+const API_ROOT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080';
 
 function callApi({ endpoint, _schema, method = 'GET', data, token }) {
   // const fullUrl = __SERVER__ ? `${API_ROOT}${endpoint}` : endpoint;

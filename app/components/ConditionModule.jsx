@@ -13,7 +13,7 @@ import ProgramModule from './Module';
 const propTypes = {
   id: PropTypes.string,
   entities: PropTypes.object,
-  condition: PropTypes.array,
+  condition: PropTypes.string,
   procedure: PropTypes.array,
   moduleType: PropTypes.string,
   dispatch: PropTypes.func,

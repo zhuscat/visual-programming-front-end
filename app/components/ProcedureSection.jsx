@@ -1,12 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Modal from './Modal';
 import ModuleBlock from './ModuleBlock';
-import InputModule from './InputModule';
-import OutputModule from './OutputModule';
-import VariableModule from './VariableModule';
 import AddModuleButton from './AddModuleButton';
-import OperatorModule from './OperatorModule';
-import ConditionModule from './ConditionModule';
 import ProgramModule from './Module';
 import { addInput } from '../actions/InputActions';
 import { addVariable } from '../actions/VariableActions';
