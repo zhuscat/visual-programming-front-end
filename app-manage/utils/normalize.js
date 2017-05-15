@@ -52,12 +52,9 @@ function responseTransform(response) {
     nameMap[value.name] = value.id;
   });
 
-  // 加入有 testCases 字段的话？
-  // 因为目前服务器有一些问题，先打个补丁
-  const testCasesFixed = testCases || [];
-  testCasesFixed.forEach((tc) => {
+  testCases.forEach((tc) => {
     const tcId = uuid('TESTCASE');
-    testCaseArea.push(tcId);
+    target.testCaseArea.push(tcId);
     target.entities[tcId] = {
       id: tcId,
       moduleType: 'TESTCASE',

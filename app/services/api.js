@@ -177,6 +177,9 @@ export const fetchProblem = (id, token) => {
   }).then(({ response, error }) => {
     if (response) {
       program.structInfo = response.structInfo;
+      if (response.passRate != null) {
+        program.rate = response.passRate;
+      }
       return { response: program };
     } else if ( error ) {
       return { error };
@@ -193,9 +196,9 @@ export const saveProblem = (savedProgram, token) => callApi({
   token,
 });
 
-// 这里的问题
+
 export const execProblem = (id, token) => callApi({
-  endpoint: `/v1/problem/exec`,
+  endpoint: `/v1/sol/eval/${id}`,
   token,
 });
 

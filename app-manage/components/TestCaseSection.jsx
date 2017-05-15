@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import AddModuleButton from './AddModuleButton';
 import TestCaseModule from './testcase-module';
+import '../../styles/notification-bar.scss';
 
 const propTypes = {
   variableArea: PropTypes.array,
@@ -27,13 +28,14 @@ export default class TestCaseSection extends Component {
     const inputs = {};
     const { variableArea, entities } = this.props;
     console.log(variableArea);
-    variableArea.forEach((id) => {
-      const input = entities[id];
-      const { name } = input;
-      if (name) {
-        inputs[name] = null;
-      }
-    });
+    variableArea
+      .forEach((id) => {
+        const input = entities[id];
+        const { name, moduleType } = input;
+        if (name && moduleType === 'INPUT') {
+          inputs[name] = null;
+        }
+      });
     this.props.onTestCaseAdd({
       inputs,
       expect: null,
@@ -73,6 +75,9 @@ export default class TestCaseSection extends Component {
       <div
         className="vp-section"
       >
+        <div className="vp-notification-bar">
+          <i className="iconfont icon-laba" />温馨提示：不要急，测试用例可以不断添加
+        </div>
         {this.renderTestCases()}
         {this.renderAddButton()}
       </div>

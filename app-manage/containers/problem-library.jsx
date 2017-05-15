@@ -10,12 +10,15 @@ const propTypes = {
   items: PropTypes.array,
   fetchAllProblems: PropTypes.func,
   fetchProblem: PropTypes.func,
+  createProblem: PropTypes.func,
+  deleteProblem: PropTypes.func,
 };
 
 class ProblemLibraryContainer extends Component {
   constructor(props) {
     super(props);
     this.handleCardClick = this.handleCardClick.bind(this);
+    this.onCreateClick = this.onCreateClick.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +31,11 @@ class ProblemLibraryContainer extends Component {
     history.push('/');
   }
 
+  onCreateClick() {
+    this.props.createProblem();
+    history.push('/');
+  }
+
   render() {
     return (
       <div style={{ position: 'relative' }}>
@@ -35,6 +43,8 @@ class ProblemLibraryContainer extends Component {
         <ProblemLibrary
           items={this.props.items}
           onCardClick={this.handleCardClick}
+          onCreateClick={this.onCreateClick}
+          onDeleteClick={this.props.deleteProblem}
         />
       </div>
     );
@@ -55,6 +65,8 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   fetchAllProblems: problemActions.fetchAllProblems.request,
   fetchProblem: problemActions.fetchProblem.request,
+  createProblem: problemActions.createLocal,
+  deleteProblem: problemActions.deleteProblem.request,
 })(ProblemLibraryContainer);
 
 

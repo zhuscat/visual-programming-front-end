@@ -69,6 +69,16 @@ export function* runUpdateProblem({ program }) {
   }
 }
 
+export function* runDeleteProblem({ id }) {
+  const token = yield select(state => state.user.token);
+  const { response, error } = yield call(api.deleteProblem, id, token);
+  if (response) {
+    yield put(problemActions.deleteProblem.success({ id }, response));
+  } else {
+    yield put(problemActions.deleteProblem.failure({ id }, response));
+  }
+}
+
 export function* fetchProblem() {
   yield* takeEvery(problemActions.FETCH_PROBLEM.REQUEST, runFetchProblem);
 }
@@ -90,10 +100,15 @@ export function* updateProblem() {
   yield* takeEvery(problemActions.UPDATE_PROBLEM.REQUEST, runUpdateProblem);
 }
 
+export function* deleteProblem() {
+  yield* takeEvery(problemActions.DELETE_PROBLEM.REQUEST, runDeleteProblem);
+}
+
 export default function* problem() {
   yield fork(fetchProblem);
   yield fork(fetchAllProblems);
   yield fork(saveProblem);
   yield fork(execProblem);
   yield fork(updateProblem);
+  yield fork(deleteProblem);
 }

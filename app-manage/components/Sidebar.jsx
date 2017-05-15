@@ -14,16 +14,16 @@ const propTypes = {
   onProgramTitleChange: PropTypes.func,
   onProgramDescChange: PropTypes.func,
   addProblem: PropTypes.func,
+  updateProblem: PropTypes.func,
   name: PropTypes.string,
   description: PropTypes.string,
-  onExecButtonClick: PropTypes.func,
+  state: PropTypes.number,
 };
 
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
-    this.onExecButtonClick = this.onExecButtonClick.bind(this);
     this.onUpdateButtonClick = this.onUpdateButtonClick.bind(this);
     this.handleProgramTitleChange = this.handleProgramTitleChange.bind(this);
     this.handleProgramDescChange = this.handleProgramDescChange.bind(this);
@@ -31,27 +31,33 @@ export default class Sidebar extends Component {
 
   // 这里这个方法就当成发布了，严格来说只改变 state 吧
   onUpdateButtonClick() {
-    const { id, name, description, entities, procedureArea, variableArea } = this.props;
+    // 更新需要 name description state testCases
+    const { id, name, description, entities, procedureArea, variableArea, testCaseArea } = this.props;
     const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
-    this.props.updateProgram({
+    const testCases = [];
+    testCaseArea.forEach((id) => {
+      const tc = entities[id];
+      if (tc) {
+        testCases.push({
+          inputs: tc.inputs,
+          expect: tc.expect,
+        });
+      }
+    });
+    this.props.updateProblem({
       program: {
         id: id,
+        name,
+        description,
         state: 1,
+        testCases,
       },
     });
   }
 
   onSaveButtonClick() {
     const { name, description, entities, procedureArea, variableArea, testCaseArea } = this.props;
-    /**
-     * 当调用两次 denormalize 的时候出现错误
-     * 其原因应该是这个函数是有副作用的，改变的原来的对象
-     * TODO: 将其改为无副作用的
-     * DONE: 改完了
-     */
-    // console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
 
-    // 已经实现了后端要求的格式了
     const denormalizedData = denormalize({ entities, procedureArea, variableArea });
     const inputs = [];
     let output = {};
@@ -90,13 +96,6 @@ export default class Sidebar extends Component {
       structInfo,
     };
     this.props.addProblem({ program });
-  }
-
-  onExecButtonClick() {
-    // this.props.onExecButtonClick(this.props.id);
-    if (window) {
-      window.open(`http://localhost:8080/v1/program/gen/${this.props.id}`);
-    }
   }
 
   handleProgramTitleChange(event) {
@@ -142,14 +141,25 @@ export default class Sidebar extends Component {
             发布
           </Button>
         );
+      } else {
+        return (
+          <Button
+            type="hollow"
+            radius
+            style={{
+              width: '100%',
+              display: 'block',
+              margin: '16px auto',
+            }}
+            onClick={this.onUpdateButtonClick}
+          >
+            更新
+          </Button>
+        );
       }
     }
-    return null;
   }
 
-  // 暂时先弄成没有保存的时候就不显示执行按钮
-  // 不过这样的问题是当“程序更新”了之后没有按更新按钮，执行的仍然是旧程序
-  // TODO: need to be imporved
   render() {
     return (
       <div className="vp-sidebar">
@@ -164,21 +174,10 @@ export default class Sidebar extends Component {
           value={this.props.description}
           onChange={this.handleProgramDescChange}
         />
+        <div className={`vp-problem-state vp-problem-state--${this.props.state === 0 ? 'gray' : 'green'}`}>
+        {this.props.state === 0 ? "未发布" : "已发布"}
+        </div>
         {this.renderButtons()}
-        {this.props.id ?
-          <Button
-            type="hollow"
-            radius
-            style={{
-              width: '100%',
-              display: 'block',
-              margin: '8px auto',
-            }}
-            onClick={this.onExecButtonClick}
-          >
-            执行
-          </Button> : null
-        }
       </div>
     );
   }

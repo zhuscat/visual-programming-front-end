@@ -30,6 +30,7 @@ function mapStateToProps(state) {
     procedureArea,
     testCaseArea,
     token,
+    state: program.state,
   };
 }
 
@@ -37,4 +38,5 @@ export default connect(mapStateToProps, {
   onProgramTitleChange: programActions.titleChange,
   onProgramDescChange: programActions.descChange,
   addProblem: problemActions.saveProblem.request,
+  updateProblem: problemActions.updateProblem.request,
 })(SidebarContainer);

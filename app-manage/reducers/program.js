@@ -91,6 +91,18 @@ const program = (state = initialState, action) => {
         procedureArea: [],
         testCaseArea: [],
       };
+    case problemActions.CREATE_PROBLEM_LOCAL:
+      return {
+        ...state,
+        id: '',
+        name: '',
+        description: '',
+        isLoading: false,
+        variableArea: [],
+        procedureArea: [],
+        testCaseArea: [],
+        state: 0,
+      };
     case actions.ADD_PROGRAM.REQUEST:
       return {
         ...state,
@@ -147,6 +159,7 @@ const program = (state = initialState, action) => {
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
         testCaseArea: action.testCaseArea,
+        state: action.state,
       };
     case problemActions.FETCH_PROBLEM.FAILURE:
       return {
@@ -169,6 +182,22 @@ const program = (state = initialState, action) => {
         state: action.program.state,
       };
     case problemActions.UPDATE_PROBLEM.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case problemActions.SAVE_PROBLEM.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case problemActions.SAVE_PROBLEM.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        id: action.response.id,
+      };
+    case problemActions.SAVE_PROBLEM.FAILURE:
       return {
         ...state,
         isLoading: false,

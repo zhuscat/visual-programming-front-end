@@ -19,6 +19,8 @@ const propTypes = {
   description: PropTypes.string,
   onExecButtonClick: PropTypes.func,
   updateProblem: PropTypes.func,
+  execProblem: PropTypes.func,
+  rate: PropTypes.any,
 };
 
 export default class Sidebar extends Component {
@@ -88,7 +90,7 @@ export default class Sidebar extends Component {
       if (type === 'PROGRAM') {
         window.open(`http://localhost:8080/v1/program/gen/${id}`);
       } else if (type === 'PROBLEM') {
-        window.open(`http://localhost:8080/v1/eval/${id}`);
+        this.props.execProblem({ id });
       }
     }
   }
@@ -101,9 +103,29 @@ export default class Sidebar extends Component {
     this.props.onProgramDescChange(event.target.value);
   }
 
+  renderSaveOrUpdateButton() {
+    const shouldRenderUpdate = 
+      (this.props.id && this.props.type === 'PROGRAM') ||
+      (this.props.id && this.props.type === 'PROBLEM' && this.props.state !== 0);
+    return (
+      <Button
+        type="hollow"
+        radius
+        style={{
+          width: '100%',
+          display: 'block',
+          margin: '16px auto',
+        }}
+        onClick={this.props.id ? this.onUpdateButtonClick : this.onSaveButtonClick}
+      >
+        {shouldRenderUpdate ? '更新' : '保存'}
+      </Button>
+    );
+  }
+
   renderExecButton() {
-    const { id } = this.props;
-    if (id) {
+    const { id, type } = this.props;
+    if ((id && type === 'PROGRAM') || (id && type === 'PROBLEM' && this.props.state !== 0)) {
       return (
         <Button
           type="hollow"
@@ -118,6 +140,34 @@ export default class Sidebar extends Component {
           执行
         </Button>
       );
+    }
+    return null;
+  }
+
+  renderStatus() {
+    const { type, state } = this.props;
+    if (type === 'PROGRAM') {
+      return null;
+    } else if (type === 'PROBLEM') {
+      if (state === 0) {
+        return <div className="vp-problem-state">未做题</div>;
+      } else if (state === 1) {
+        return <div className="vp-problem-state vp-problem-state--yellow">进行中</div>;
+      } else if (state === 2) {
+        return <div className="vp-problem-state vp-problem-state--green">已通过</div>;
+      } else if (state === 3) {
+        return <div className="vp-problem-state vp-problem-state--red">未通过</div>;
+      }
+    }
+    return null;
+  }
+
+  renderRate() {
+    const { type, rate } = this.props;
+    if (type === 'PROGRAM') {
+      return null;
+    } else if (type === 'PROBLEM') {
+      return <div className="vp-problem-rate">{`${rate}%`}</div>;
     }
     return null;
   }
@@ -139,18 +189,9 @@ export default class Sidebar extends Component {
           value={this.props.description}
           onChange={this.handleProgramDescChange}
         />
-        <Button
-          type="hollow"
-          radius
-          style={{
-            width: '100%',
-            display: 'block',
-            margin: '16px auto',
-          }}
-          onClick={this.props.id ? this.onUpdateButtonClick : this.onSaveButtonClick}
-        >
-          {this.props.id ? '更新' : '保存'}
-        </Button>
+        {this.renderStatus()}
+        {this.renderRate()}
+        {this.renderSaveOrUpdateButton()}
         {this.renderExecButton()}
       </div>
     );

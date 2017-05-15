@@ -6,6 +6,7 @@ import { addInput } from '../actions/InputActions';
 import { addVariable } from '../actions/VariableActions';
 import { addOutput } from '../actions/OutputActions';
 import ProgramModule from './Module';
+import '../../styles/notification-bar.scss';
 
 const propTypes = {
   entities: PropTypes.object,
@@ -101,6 +102,10 @@ export default class VariableSection extends Component {
           borderRight: '1px solid #d9d9d9',
         }}
       >
+        <div className="vp-notification-bar">
+          <i className="iconfont icon-laba" />
+          温馨提示：在保存后再执行，执行之前记得先保存哦
+        </div>
         {this.props.nodes.map(id => this.createModule(this.props.entities[id]))}
         {this.renderAddButton()}
       </div>

@@ -136,7 +136,8 @@ const program = (state = initialState, action) => {
         description: action.description,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
-        state: action.state,
+        state: action.response.state,
+        rate: action.response.rate,
       };
     case problemActions.FETCH_PROBLEM.FAILURE:
       return {
@@ -156,6 +157,23 @@ const program = (state = initialState, action) => {
         isLoading: false,
       };
     case problemActions.UPDATE_PROBLEM.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case problemActions.EXEC_PROBLEM.REQUEST:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case problemActions.EXEC_PROBLEM.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        rate: action.response.passRate,
+        state: action.response.state,
+      };
+    case problemActions.EXEC_PROBLEM.FAILURE:
       return {
         ...state,
         isLoading: false,
