@@ -11,7 +11,7 @@ const propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   dtype: PropTypes.string,
-  description: PropTypes.string,
+  desc: PropTypes.string,
   undeletable: PropTypes.bool,
   types: PropTypes.array,
   dispatch: PropTypes.func,
@@ -20,7 +20,7 @@ const propTypes = {
 const defaultProps = {
   name: '',
   dtype: '',
-  description: '',
+  desc: '',
   types: [],
   onChange: noop,
 };
@@ -45,7 +45,7 @@ export default class OutputModule extends Component {
       id: this.props.id,
       name: value,
       dtype: this.props.dtype,
-      description: this.props.description,
+      desc: this.props.desc,
     }));
   }
 
@@ -55,17 +55,17 @@ export default class OutputModule extends Component {
       id: this.props.id,
       name: this.props.name,
       dtype: value,
-      description: this.props.description,
+      desc: this.props.desc,
     }));
   }
 
-  handleValueInputChange(description) {
+  handleValueInputChange(desc) {
     const { dispatch } = this.props;
     dispatch(changeOutput({
       id: this.props.id,
       name: this.props.name,
       dtype: this.props.dtype,
-      description,
+      desc,
     }));
   }
 
@@ -100,7 +100,7 @@ export default class OutputModule extends Component {
           <div className="vp-output-module__item">
             <label className="vp-output-module__name">描述</label>
             <TextInput
-              value={this.props.description}
+              value={this.props.desc}
               onChange={this.handleValueInputChange}
             />
           </div>

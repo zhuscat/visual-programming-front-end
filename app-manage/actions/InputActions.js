@@ -10,13 +10,13 @@ export const addInput = ({ area }) => ({
   },
 });
 
-export const changeInput = ({ id, name, dtype, description }) => ({
+export const changeInput = ({ id, name, dtype, desc }) => ({
   type: 'UPDATE_MODULE',
   module: {
     id,
     name,
     dtype,
-    description,
+    desc,
   },
 });
 

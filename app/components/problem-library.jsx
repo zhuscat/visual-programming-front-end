@@ -20,7 +20,8 @@ export default class ProgramLibrary extends Component {
           {this.props.items.map(item => {
             return (
               <ProgramCard
-                id={item.programId}
+                id={item.id}
+                key={item.id}
                 title={item.name}
                 description={item.description}
                 onClick={this.props.onCardClick}

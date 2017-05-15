@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import SidebarContainer from './SidebarContainer';
 import LoadingOverlay from '../components/loading-overlay';
 import VariableSectionContainer from './VariableSectionContainer';
-import ProcedureSectionContainer from './ProcedureSectionContainer';
+import TestCaseSectionContainer from './testcase-section-container';
 import '../../styles/header-nav.scss';
 import '../../styles/header.scss';
 import '../../styles/utils.scss';
@@ -24,6 +24,7 @@ class Editor extends Component {
         <SidebarContainer />
         <div className="vp-container">
           <VariableSectionContainer />
+          <TestCaseSectionContainer />
         </div>
       </div>
     );

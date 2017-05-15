@@ -42,6 +42,12 @@ export default class Header extends Component {
         />
         <NavItem
           type="link"
+          link="/square"
+          iconName="all"
+          title="广场"
+        />
+        <NavItem
+          type="link"
           link="/user"
           iconName="geren"
           title="信息"

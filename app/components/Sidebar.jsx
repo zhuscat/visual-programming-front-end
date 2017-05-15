@@ -6,6 +6,8 @@ import '../../styles/sidebar.scss';
 
 const propTypes = {
   id: PropTypes.string,
+  type: PropTypes.string,
+  state: PropTypes.any, /* can be number or null */
   entities: PropTypes.object,
   procedureArea: PropTypes.array,
   variableArea: PropTypes.array,
@@ -16,6 +18,7 @@ const propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
   onExecButtonClick: PropTypes.func,
+  updateProblem: PropTypes.func,
 };
 
 export default class Sidebar extends Component {
@@ -29,20 +32,29 @@ export default class Sidebar extends Component {
   }
 
   onUpdateButtonClick() {
-    const { id, name, description, entities, procedureArea, variableArea } = this.props;
+    const { id, name, description, entities, procedureArea, variableArea, type } = this.props;
     const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
-    this.props.updateProgram({
-      program: {
-        programId: id,
-        name,
-        description,
-        structInfo,
-      },
-    });
+    if (type === 'PROGRAM') {
+      this.props.updateProgram({
+        program: {
+          programId: id,
+          name,
+          description,
+          structInfo,
+        },
+      });
+    } else if (type === 'PROBLEM') {
+      this.props.updateProblem({
+        program: {
+          id,
+          structInfo,
+        },
+      });
+    }
   }
 
   onSaveButtonClick() {
-    const { name, description, entities, procedureArea, variableArea } = this.props;
+    const { name, description, entities, procedureArea, variableArea, type } = this.props;
     /**
      * 当调用两次 denormalize 的时候出现错误
      * 其原因应该是这个函数是有副作用的，改变的原来的对象
@@ -51,19 +63,33 @@ export default class Sidebar extends Component {
      */
     // console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
     const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
-    this.props.addProgram({
-      program: {
-        name,
-        description,
-        structInfo,
-      },
-    });
+    if (type === 'PROGRAM') {
+      this.props.addProgram({
+        program: {
+          name,
+          description,
+          structInfo,
+        },
+      });
+    } else if (type === 'PROBLEM') {
+      this.props.updateProblem({
+        program: {
+          id: this.props.id,
+          structInfo,
+        },
+      });
+    }
   }
 
   onExecButtonClick() {
     // this.props.onExecButtonClick(this.props.id);
     if (window) {
-      window.open(`http://localhost:8080/v1/program/gen/${this.props.id}`);
+      const { type, id } = this.props;
+      if (type === 'PROGRAM') {
+        window.open(`http://localhost:8080/v1/program/gen/${id}`);
+      } else if (type === 'PROBLEM') {
+        window.open(`http://localhost:8080/v1/eval/${id}`);
+      }
     }
   }
 
@@ -73,6 +99,27 @@ export default class Sidebar extends Component {
 
   handleProgramDescChange(event) {
     this.props.onProgramDescChange(event.target.value);
+  }
+
+  renderExecButton() {
+    const { id } = this.props;
+    if (id) {
+      return (
+        <Button
+          type="hollow"
+          radius
+          style={{
+            width: '100%',
+            display: 'block',
+            margin: '8px auto',
+          }}
+          onClick={this.onExecButtonClick}
+        >
+          执行
+        </Button>
+      );
+    }
+    return null;
   }
 
   // 暂时先弄成没有保存的时候就不显示执行按钮
@@ -104,20 +151,7 @@ export default class Sidebar extends Component {
         >
           {this.props.id ? '更新' : '保存'}
         </Button>
-        {this.props.id ?
-          <Button
-            type="hollow"
-            radius
-            style={{
-              width: '100%',
-              display: 'block',
-              margin: '8px auto',
-            }}
-            onClick={this.onExecButtonClick}
-          >
-            执行
-          </Button> : null
-        }
+        {this.renderExecButton()}
       </div>
     );
   }

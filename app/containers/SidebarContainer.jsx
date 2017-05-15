@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Sidebar from '../components/Sidebar';
 import * as programActions from '../actions/program';
+import * as problemActions from '../actions/problem';
 
 class SidebarContainer extends Component {
   constructor(props) {
@@ -35,15 +36,17 @@ class SidebarContainer extends Component {
 
 function mapStateToProps(state) {
   const { entities, program, user } = state;
-  const { id, variableArea, procedureArea, name, description } = program;
+  const { id, variableArea, procedureArea, name, description, type } = program;
   const { token } = user;
   return {
     entities,
     id,
     name,
+    type,
     description,
     variableArea,
     procedureArea,
+    state: program.state,
     token,
   };
 }
@@ -53,4 +56,5 @@ export default connect(mapStateToProps, {
   onProgramDescChange: programActions.descChange,
   addProgram: programActions.addProgram.request,
   updateProgram: programActions.updateProgram.request,
+  updateProblem: problemActions.updateProblem.request,
 })(SidebarContainer);

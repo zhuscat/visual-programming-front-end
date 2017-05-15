@@ -8,6 +8,8 @@ const initialState = {
   isLoading: false,
   variableArea: [],
   procedureArea: [],
+  testCaseArea: [],
+  state: 0,
 };
 
 // TODO: simply combine procedure area and variable area, need to improve performance
@@ -24,6 +26,11 @@ const program = (state = initialState, action) => {
           ...state,
           procedureArea: [...state.procedureArea, action.module.id],
         };
+      } else if (!action.module.parentId && action.area === 'TESTCASE_AREA') {
+        return {
+          ...state,
+          testCaseArea: [...state.testCaseArea, action.module.id],
+        };
       }
       return state;
     case 'DELETE_MODULE':
@@ -36,6 +43,10 @@ const program = (state = initialState, action) => {
         idx = state.procedureArea.indexOf(action.module.id);
         if (idx !== -1) {
           area = 'procedureArea';
+        }
+        idx = state.testCaseArea.indexOf(action.module.id);
+        if (idx !== -1) {
+          area = 'testCaseArea';
         }
         if (area) {
           return {
@@ -59,6 +70,7 @@ const program = (state = initialState, action) => {
         description: action.description,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
+        testCaseArea: action.testCaseArea,
       };
     case actions.FETCH_PROGRAM.FAILURE:
       return {
@@ -66,6 +78,7 @@ const program = (state = initialState, action) => {
         isLoading: false,
         variableArea: [],
         procedureArea: [],
+        testCaseArea: [],
       };
     case actions.CREATE_PROGRAM_LOCAL:
       return {
@@ -76,6 +89,7 @@ const program = (state = initialState, action) => {
         isLoading: false,
         variableArea: [],
         procedureArea: [],
+        testCaseArea: [],
       };
     case actions.ADD_PROGRAM.REQUEST:
       return {
@@ -86,7 +100,7 @@ const program = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        id: action.programId,
+        id: action.response.programId,
       };
     case actions.ADD_PROGRAM.FAILURE:
       return {
@@ -132,6 +146,7 @@ const program = (state = initialState, action) => {
         description: action.description,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
+        testCaseArea: action.testCaseArea,
       };
     case problemActions.FETCH_PROBLEM.FAILURE:
       return {
@@ -139,6 +154,24 @@ const program = (state = initialState, action) => {
         isLoading: false,
         variableArea: [],
         procedureArea: [],
+        testCaseArea: [],
+      };
+    case problemActions.UPDATE_PROBLEM.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    // TODO: 目前的需求是只改 state
+    case problemActions.UPDATE_PROBLEM.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        state: action.program.state,
+      };
+    case problemActions.UPDATE_PROBLEM.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
       };
     default:
       return state;

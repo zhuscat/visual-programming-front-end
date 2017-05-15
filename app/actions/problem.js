@@ -5,15 +5,18 @@ export const SAVE_PROBLEM = createRequestType('SAVE_PROBLEM');
 export const EXEC_PROBLEM = createRequestType('EXEC_PROBLEM');
 export const FETCH_ALL_PROBLEMS = createRequestType('FETCH_ALL_PROBLEMS');
 export const FETCH_PROBLEM = createRequestType('FETCH_PROBLEM');
+export const UPDATE_PROBLEM = createRequestType('UPDATE_PROBLEM');
 
 const saveProblem = createRequestAction(SAVE_PROBLEM);
 const execProblem = createRequestAction(EXEC_PROBLEM);
 const fetchAllProblems = createRequestAction(FETCH_ALL_PROBLEMS);
 const fetchProblem = createRequestAction(FETCH_PROBLEM);
+const updateProblem = createRequestAction(UPDATE_PROBLEM);
 
 export {
   saveProblem,
   execProblem,
   fetchAllProblems,
   fetchProblem,
+  updateProblem,
 };

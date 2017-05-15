@@ -16,8 +16,6 @@ export default function user(state = initialState, action) {
         isLoading: true,
       };
     case actions.USER_LOGIN.SUCCESS:
-      console.log('login success');
-      console.log(action);
       return {
         ...state,
         isAuthenticated: true,
@@ -46,6 +44,21 @@ export default function user(state = initialState, action) {
         isLoading: false,
       };
     case actions.USER_REGISTER.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case actions.USER_CHANGE_PASSWORD.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case actions.USER_CHANGE_PASSWORD.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case actions.USER_CHANGE_PASSWORD.FAILURE:
       return {
         ...state,
         isLoading: false,

@@ -7,7 +7,7 @@ const propTypes = {
   onCardClick: PropTypes.func,
 };
 
-export default class ProgramLibrary extends Component {
+export default class ProblemLibrary extends Component {
   render() {
     return (
       <div
@@ -20,7 +20,7 @@ export default class ProgramLibrary extends Component {
           {this.props.items.map(item => {
             return (
               <ProgramCard
-                id={item.programId}
+                id={item.id}
                 title={item.name}
                 description={item.description}
                 onClick={this.props.onCardClick}
@@ -33,4 +33,4 @@ export default class ProgramLibrary extends Component {
   }
 }
 
-ProgramLibrary.propTypes = propTypes;
+ProblemLibrary.propTypes = propTypes;

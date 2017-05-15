@@ -29,7 +29,7 @@ export default class AddModuleButton extends Component {
         style={this.props.style}
       >
         <i
-          className="fa fa-plus fa-2x"
+          className="iconfont icon-add"
         />
       </div>
     );

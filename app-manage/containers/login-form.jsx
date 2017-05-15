@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import LoginForm from '../components/LoginForm';
+import LoadingOverlay from '../components/loading-overlay';
 import * as userActions from '../actions/user';
 
 const propTypes = {
@@ -20,9 +21,12 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <LoginForm
-        onSubmit={this.handleSubmit}
-      />
+      <div>
+        <LoadingOverlay isShowing={this.props.isLoading} />
+        <LoginForm
+          onSubmit={this.handleSubmit}
+        />
+      </div>
     );
   }
 }
@@ -30,7 +34,11 @@ class LoginContainer extends Component {
 LoginContainer.propTypes = propTypes;
 
 function mapStateToProps(state) {
-  return {};
+  const { user } = state;
+  const { isLoading } = user;
+  return {
+    isLoading,
+  };
 }
 
 export default connect(mapStateToProps, {

@@ -10,15 +10,18 @@ export function* runFetchProblem({ id }) {
   const { response, error } = yield call(api.fetchProblem, id, token);
   if (response) {
     // 对 response 进行操作
+    const { state } = response;
     const { name, description, program } = normalize(response);
-    const { variableArea, procedureArea, entities } = program;
+    const { variableArea, procedureArea, testCaseArea, entities } = program;
     yield put(problemActions.fetchProblem.success({
       id,
       name,
       description,
       variableArea,
       procedureArea,
+      testCaseArea,
       entities,
+      state,
     }, response));
   } else {
     yield put(problemActions.fetchProblem.failure({ id }, error));
@@ -56,6 +59,16 @@ export function* runExecProblem({ id }) {
   }
 }
 
+export function* runUpdateProblem({ program }) {
+  const token = yield select(state => state.user.token);
+  const { response, error } = yield call(api.updateProblem, program, token);
+  if (response) {
+    yield put(problemActions.updateProblem.success({ program }, response));
+  } else {
+    yield put(problemActions.updateProblem.failure({ problem }, error));
+  }
+}
+
 export function* fetchProblem() {
   yield* takeEvery(problemActions.FETCH_PROBLEM.REQUEST, runFetchProblem);
 }
@@ -73,9 +86,14 @@ export function* execProblem() {
   yield* takeEvery(problemActions.EXEC_PROBLEM.REQUEST, runExecProblem);
 }
 
+export function* updateProblem() {
+  yield* takeEvery(problemActions.UPDATE_PROBLEM.REQUEST, runUpdateProblem);
+}
+
 export default function* problem() {
   yield fork(fetchProblem);
   yield fork(fetchAllProblems);
   yield fork(saveProblem);
   yield fork(execProblem);
+  yield fork(updateProblem);
 }

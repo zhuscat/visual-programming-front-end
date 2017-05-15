@@ -9,13 +9,13 @@ export const addOutput = ({ area }) => ({
   },
 });
 
-export const changeOutput = ({ id, name, dtype, description }) => ({
+export const changeOutput = ({ id, name, dtype, desc }) => ({
   type: 'UPDATE_MODULE',
   module: {
     id,
     name,
     dtype,
-    description,
+    desc,
   },
 });
 

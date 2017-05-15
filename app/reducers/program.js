@@ -5,6 +5,7 @@ const initialState = {
   id: '',
   name: '',
   description: '',
+  type: 'PROGRAM',
   isLoading: false,
   variableArea: [],
   procedureArea: [],
@@ -57,6 +58,7 @@ const program = (state = initialState, action) => {
         id: action.id,
         name: action.name,
         description: action.description,
+        type: 'PROGRAM',
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
       };
@@ -73,6 +75,7 @@ const program = (state = initialState, action) => {
         id: '',
         name: '',
         description: '',
+        type: 'PROGRAM',
         isLoading: false,
         variableArea: [],
         procedureArea: [],
@@ -129,9 +132,11 @@ const program = (state = initialState, action) => {
         isLoading: false,
         id: action.id,
         name: action.name,
+        type: 'PROBLEM',
         description: action.description,
         variableArea: action.variableArea,
         procedureArea: action.procedureArea,
+        state: action.state,
       };
     case problemActions.FETCH_PROBLEM.FAILURE:
       return {
@@ -139,6 +144,21 @@ const program = (state = initialState, action) => {
         isLoading: false,
         variableArea: [],
         procedureArea: [],
+      };
+    case problemActions.UPDATE_PROBLEM.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case problemActions.UPDATE_PROBLEM.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case problemActions.UPDATE_PROBLEM.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
       };
     default:
       return state;

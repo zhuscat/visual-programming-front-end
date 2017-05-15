@@ -20,5 +20,6 @@
 
   &__name {
     @extend %vp-base-module-subtitle;
+    min-width: 28px;
   }
 }

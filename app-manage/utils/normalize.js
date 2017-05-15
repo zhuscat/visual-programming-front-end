@@ -1,3 +1,5 @@
+import uuid from './uuid';
+
 /**
  * 此时进来的 value 为 object
  */
@@ -22,7 +24,7 @@ function procedureNodeTransform(value, target, nameMap) {
   }
   const procedure = [];
   if (value.condition) {
-    value.condition = value.condition.id;
+    value.condition = value.condition.id || '';
   }
   if (value.procedure) {
     value.procedure.forEach(v => {
@@ -34,19 +36,34 @@ function procedureNodeTransform(value, target, nameMap) {
 }
 
 function responseTransform(response) {
-  const { name, description, structInfo } = response;
+  const { name, description, structInfo, testCases } = response;
   const json = JSON.parse(structInfo);
   const nameMap = {};
   const target = {
     entities: {},
     variableArea: [],
     procedureArea: [],
+    testCaseArea: [],
   };
   json.variableArea.forEach(value => {
     target.entities[value.id] = value;
     target.variableArea.push(value.id);
     // 产生一个变量的 name 与 id 的映射表，方面下面查询
     nameMap[value.name] = value.id;
+  });
+
+  // 加入有 testCases 字段的话？
+  // 因为目前服务器有一些问题，先打个补丁
+  const testCasesFixed = testCases || [];
+  testCasesFixed.forEach((tc) => {
+    const tcId = uuid('TESTCASE');
+    testCaseArea.push(tcId);
+    target.entities[tcId] = {
+      id: tcId,
+      moduleType: 'TESTCASE',
+      inputs: tc.inputs,
+      expect: tc.expect,
+    };
   });
   /**
    * 值得注意的一些事情

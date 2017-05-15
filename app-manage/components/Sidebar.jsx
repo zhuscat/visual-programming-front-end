@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import UnderlineInput from './UnderlineInput';
-import UnderlineTextarea from './underline-textarea'
+import UnderlineTextarea from './underline-textarea';
 import Button from './Button';
 import denormalize from '../utils/denormalize';
 import '../../styles/sidebar.scss';
@@ -10,10 +10,10 @@ const propTypes = {
   entities: PropTypes.object,
   procedureArea: PropTypes.array,
   variableArea: PropTypes.array,
+  testCaseArea: PropTypes.array,
   onProgramTitleChange: PropTypes.func,
   onProgramDescChange: PropTypes.func,
-  addProgram: PropTypes.func,
-  updateProgram: PropTypes.func,
+  addProblem: PropTypes.func,
   name: PropTypes.string,
   description: PropTypes.string,
   onExecButtonClick: PropTypes.func,
@@ -24,39 +24,72 @@ export default class Sidebar extends Component {
     super(props);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.onExecButtonClick = this.onExecButtonClick.bind(this);
+    this.onUpdateButtonClick = this.onUpdateButtonClick.bind(this);
     this.handleProgramTitleChange = this.handleProgramTitleChange.bind(this);
     this.handleProgramDescChange = this.handleProgramDescChange.bind(this);
   }
 
+  // 这里这个方法就当成发布了，严格来说只改变 state 吧
   onUpdateButtonClick() {
-    const { name, description, entities, procedureArea, variableArea } = this.props;
+    const { id, name, description, entities, procedureArea, variableArea } = this.props;
     const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
     this.props.updateProgram({
       program: {
-        name,
-        description,
-        structInfo,
+        id: id,
+        state: 1,
       },
     });
   }
 
   onSaveButtonClick() {
-    const { name, description, entities, procedureArea, variableArea } = this.props;
+    const { name, description, entities, procedureArea, variableArea, testCaseArea } = this.props;
     /**
      * 当调用两次 denormalize 的时候出现错误
      * 其原因应该是这个函数是有副作用的，改变的原来的对象
      * TODO: 将其改为无副作用的
      * DONE: 改完了
      */
-    console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
-    // const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
-    // this.props.addProgram({
-    //   program: {
-    //     name,
-    //     desc,
-    //     structInfo,
-    //   },
-    // });
+    // console.log(JSON.stringify(denormalize({ entities, procedureArea, variableArea }), null, '--'));
+
+    // 已经实现了后端要求的格式了
+    const denormalizedData = denormalize({ entities, procedureArea, variableArea });
+    const inputs = [];
+    let output = {};
+    denormalizedData.variableArea.forEach((variable) => {
+      if (variable.moduleType === 'INPUT') {
+        inputs.push({
+          name: variable.name,
+          dtype: variable.dtype,
+          desc: variable.desc,
+        });
+      } else if (variable.moduleType === 'OUTPUT') {
+        output = {
+          name: variable.name,
+          dtype: variable.dtype,
+          desc: variable.desc,
+        };
+      }
+    });
+    const testCases = [];
+    testCaseArea.forEach((id) => {
+      const tc = entities[id];
+      if (tc) {
+        testCases.push({
+          inputs: tc.inputs,
+          expect: tc.expect,
+        });
+      }
+    });
+    const structInfo = JSON.stringify(denormalize({ entities, procedureArea, variableArea }));
+    const program = {
+      name,
+      description,
+      inputs,
+      output,
+      testCases,
+      structInfo,
+    };
+    this.props.addProblem({ program });
   }
 
   onExecButtonClick() {
@@ -72,6 +105,46 @@ export default class Sidebar extends Component {
 
   handleProgramDescChange(event) {
     this.props.onProgramDescChange(event.target.value);
+  }
+
+  renderButtons() {
+    const { id } = this.props;
+    if (!id) {
+      return (
+        <Button
+          type="hollow"
+          radius
+          style={{
+            width: '100%',
+            display: 'block',
+            margin: '16px auto',
+          }}
+          onClick={this.onSaveButtonClick}
+        >
+          保存
+        </Button>
+      );
+    } else {
+      const { state } = this.props;
+      if (state === 0) {
+        // 未发布状态
+        return (
+          <Button
+            type="hollow"
+            radius
+            style={{
+              width: '100%',
+              display: 'block',
+              margin: '16px auto',
+            }}
+            onClick={this.onUpdateButtonClick}
+          >
+            发布
+          </Button>
+        );
+      }
+    }
+    return null;
   }
 
   // 暂时先弄成没有保存的时候就不显示执行按钮
@@ -91,18 +164,7 @@ export default class Sidebar extends Component {
           value={this.props.description}
           onChange={this.handleProgramDescChange}
         />
-        <Button
-          type="hollow"
-          radius
-          style={{
-            width: '100%',
-            display: 'block',
-            margin: '16px auto',
-          }}
-          onClick={this.props.id ? this.onUpdateButtonClick : this.onSaveButtonClick}
-        >
-          {this.props.id ? '更新' : '保存'}
-        </Button>
+        {this.renderButtons()}
         {this.props.id ?
           <Button
             type="hollow"

@@ -146,10 +146,45 @@ export const fetchAllProblems = (token) => callApi({
   token,
 });
 
-export const fetchProblem = (id, token) => callApi({
-  endpoint: `/v1/problem/${id}/`,
-  token,
-});
+// 本来这个转换应该在上层进行处理的
+// 不过因为一些原因，我这里直接做一次转换吧
+// 一个缺点是需要进行两次请求，且灵活性不高
+export const fetchProblem = (id, token) => {
+  const program = {};
+  return callApi({
+    endpoint: `/v1/problem/${id}/`,
+    token,
+  }).then(({ response, error }) => {
+    if (response) {
+      const { state } = response;
+      const { id } = response;
+      program.id = id;
+      program.name = response.name;
+      program.description = response.description;
+      program.state = response.state;
+      program.rate = response.rate;
+      if (state === 0) {
+        return { response };
+      } else {
+        return callApi({
+          endpoint: `/v1/sol/${id}`,
+          token,
+        });
+      }
+    } else {
+      return { error };
+    }
+  }).then(({ response, error }) => {
+    if (response) {
+      program.structInfo = response.structInfo;
+      return { response: program };
+    } else if ( error ) {
+      return { error };
+    }
+  }).catch(err => {
+    return { error: err || 'Unknown Error' };
+  });
+}
 
 export const saveProblem = (savedProgram, token) => callApi({
   endpoint: `/v1/problem/`,
@@ -161,5 +196,12 @@ export const saveProblem = (savedProgram, token) => callApi({
 // 这里的问题
 export const execProblem = (id, token) => callApi({
   endpoint: `/v1/problem/exec`,
+  token,
+});
+
+export const updateProblem = (program, token) => callApi({
+  endpoint: `/v1/sol/`,
+  method: 'POST',
+  data: program,
   token,
 });
