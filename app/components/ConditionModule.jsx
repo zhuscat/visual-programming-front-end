@@ -81,7 +81,7 @@ export default class ConditionModule extends Component {
   ifModuleBlockClick() {
     const { dispatch } = this.props;
     dispatch(addIf({ parentId: this.props.id, playload: 'procedure' }));
-    this.setState({ conditionModalOpen: false });
+    this.setState({ modalOpen: false });
   }
 
   createModule(programModule) {

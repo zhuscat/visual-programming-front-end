@@ -155,6 +155,9 @@ const program = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        id: action.response.problemId, // TODO: have not tested...
+        state: action.response.state,
+        rate: action.response.passRate,
       };
     case problemActions.UPDATE_PROBLEM.FAILURE:
       return {

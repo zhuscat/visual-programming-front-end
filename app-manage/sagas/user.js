@@ -7,7 +7,7 @@ export function* runLogin({ username, password }) {
   const { response, error } = yield call(api.login, username, password);
   if (response) {
     yield put(userActions.login.success({ username }, response));
-    history.push('/library');
+    history.push('/square');
   } else {
     yield put(userActions.login.failure({ username }, error));
   }
@@ -28,7 +28,7 @@ export function* runChangePassword({ oldPassword, newPassword }) {
   const { response, error } = yield call(api.changepassword, oldPassword, newPassword, token);
   if (response) {
     yield put(userActions.changePassword.success({ message: '修改密码成功' }, response));
-    history.push('/library');
+    history.push('/square');
   } else {
     yield put(userActions.changePassword.failure({ }, error));
   }

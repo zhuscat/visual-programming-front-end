@@ -33,6 +33,10 @@ const opTypes = [
     text: '－',
     value: 'unary_minus',
   },
+  {
+    text: '=',
+    value: 'unary_assign',
+  },
 ];
 
 export default class UnaryOperatorModule extends Component {
